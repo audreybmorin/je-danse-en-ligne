@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Je danse en ligne — Grand Montréal</title>
+<style>
+  :root {
+    --rose:    #C2185B;
+    --rose-lt: #FCE4EC;
+    --rose-md: #E91E63;
+    --teal:    #00695C;
+    --teal-lt: #E0F2F1;
+    --teal-md: #00897B;
+    --ink:     #1A1A2E;
+    --muted:   #5C5C7A;
+    --border:  #E0E0EC;
+    --bg:      #F8F8FC;
+    --white:   #FFFFFF;
+    --badge-sociale: #FFF3E0;
+    --badge-sociale-txt: #E65100;
+    --radius:  10px;
+    --shadow:  0 1px 4px rgba(26,26,46,.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--white);
+    border-bottom: 2px solid var(--rose);
+    padding: 0 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 58px;
+  }
+  .logo { font-size: 1.1rem; font-weight: 700; color: var(--rose); letter-spacing: -.3px; }
+  .logo span { color: var(--ink); font-weight: 400; }
+  nav { display: flex; gap: .25rem; }
+  nav button {
+    background: none; border: none; cursor: pointer;
+    padding: .4rem .9rem; border-radius: 20px;
+    font-size: .85rem; font-weight: 600;
+    color: var(--muted); transition: all .15s;
+  }
+  nav button.active, nav button:hover {
+    background: var(--rose-lt); color: var(--rose);
+  }
+
+  /* ── SAISON BANNER ── */
+  .saison-banner {
+    background: linear-gradient(135deg, var(--rose) 0%, #880E4F 100%);
+    color: white;
+    text-align: center;
+    padding: .65rem 1rem;
+    font-size: .9rem;
+    letter-spacing: .3px;
+  }
+  .saison-banner strong { font-weight: 700; }
+
+  /* ── MAIN ── */
+  main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  /* ── SECTION ── */
+  .section { display: none; }
+  .section.visible { display: block; }
+
+  /* ── FILTRES ── */
+  .filtres {
+    display: flex; gap: .5rem; flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+    align-items: center;
+  }
+  .filtre-label { font-size: .8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+  .filtre-btn {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 20px; padding: .3rem .85rem;
+    font-size: .82rem; cursor: pointer;
+    color: var(--muted); transition: all .15s;
+  }
+  .filtre-btn.active { background: var(--rose); border-color: var(--rose); color: white; }
+
+  /* ── SOUS-SECTION (récurrent / ponctuel) ── */
+  .sous-titre {
+    font-size: .75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--muted);
+    margin: 1.5rem 0 .75rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .sous-titre::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── GRILLE DE CARTES ── */
+  .grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  /* ── CARTE ── */
+  .carte {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: .5rem;
+    transition: box-shadow .15s, transform .1s;
+  }
+  .carte:hover { box-shadow: 0 4px 14px rgba(26,26,46,.1); transform: translateY(-1px); }
+
+  .carte-header { display: flex; justify-content: space-between; align-items: flex-start; }
+  .carte-titre { font-size: .95rem; font-weight: 700; color: var(--ink); line-height: 1.3; }
+  .carte-badge {
+    font-size: .68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .4px; padding: .2rem .55rem;
+    border-radius: 12px; white-space: nowrap; flex-shrink: 0; margin-left: .5rem;
+  }
+  .badge-enligne { background: var(--teal-lt); color: var(--teal); }
+  .badge-sociale  { background: var(--badge-sociale); color: var(--badge-sociale-txt); }
+
+  .carte-info { display: flex; flex-direction: column; gap: .3rem; }
+  .carte-ligne {
+    display: flex; align-items: flex-start; gap: .5rem;
+    font-size: .83rem; color: var(--muted);
+  }
+  .carte-ligne .ic { font-size: .9rem; flex-shrink: 0; margin-top: .05rem; }
+  .carte-ligne strong { color: var(--ink); font-weight: 600; }
+
+  .carte-prix {
+    display: inline-block;
+    font-size: .82rem; font-weight: 700;
+    padding: .15rem .6rem; border-radius: 12px;
+    background: var(--teal-lt); color: var(--teal);
+    align-self: flex-start;
+  }
+  .carte-prix.payant { background: #FFF8E1; color: #F57F17; }
+
+  .carte-precisions {
+    font-size: .78rem; color: var(--muted);
+    border-top: 1px dashed var(--border);
+    padding-top: .4rem; line-height: 1.5;
+  }
+
+  .carte-liens { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .25rem; }
+  .carte-lien {
+    font-size: .75rem; color: var(--rose); text-decoration: none;
+    border: 1px solid var(--rose-lt); border-radius: 12px;
+    padding: .15rem .6rem; transition: background .1s;
+  }
+  .carte-lien:hover { background: var(--rose-lt); }
+
+  /* ── ÉTAT CHARGEMENT / VIDE ── */
+  .etat {
+    text-align: center; padding: 3rem 1rem;
+    color: var(--muted); font-size: .95rem;
+  }
+  .etat .ic-big { font-size: 2.5rem; display: block; margin-bottom: .75rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 2rem 1rem;
+    font-size: .78rem; color: var(--muted);
+    border-top: 1px solid var(--border); margin-top: 2rem;
+  }
+
+  @media (max-width: 540px) {
+    header { height: auto; padding: .75rem 1rem; flex-direction: column; gap: .5rem; }
+    .grille { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Je danse <span>en ligne</span></div>
+  <nav>
+    <button class="active" onclick="afficherSection('soirees', this)">Soirées</button>
+    <button onclick="afficherSection('cours', this)">Cours</button>
+  </nav>
+</header>
+
+<div class="saison-banner" id="banner-saison">
+  <strong>Été 2025</strong> — Activités dans la région de Montréal
+</div>
+
+<main>
+  <!-- ══ SOIRÉES ══ -->
+  <section class="section visible" id="section-soirees">
+    <div class="filtres">
+      <span class="filtre-label">Filtrer&nbsp;:</span>
+      <button class="filtre-btn active" onclick="filtrerSoirees('tous', this)">Toutes</button>
+      <button class="filtre-btn" onclick="filtrerSoirees('En ligne', this)">Danse en ligne</button>
+      <button class="filtre-btn" onclick="filtrerSoirees('En ligne + sociale', this)">En ligne + sociale</button>
+      <button class="filtre-btn" onclick="filtrerSoirees('Oui', this)">Récurrentes</button>
+      <button class="filtre-btn" onclick="filtrerSoirees('Non', this)">Ponctuelles</button>
+    </div>
+
+    <div id="soirees-recurrentes">
+      <div class="sous-titre">Activités récurrentes</div>
+      <div class="grille" id="grille-recurrentes">
+        <div class="etat"><span class="ic-big">⏳</span>Chargement…</div>
+      </div>
+    </div>
+
+    <div id="soirees-ponctuelles">
+      <div class="sous-titre">Activités ponctuelles</div>
+      <div class="grille" id="grille-ponctuelles">
+        <div class="etat"><span class="ic-big">⏳</span>Chargement…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ COURS ══ -->
+  <section class="section" id="section-cours">
+    <div class="grille" id="grille-cours">
+      <div class="etat"><span class="ic-big">⏳</span>Chargement…</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Données mises à jour régulièrement &bull; Grand Montréal &bull; Danse en ligne sociale
+</footer>
+
+<script>
+const SHEETS = {
+  soirees: 'https://docs.google.com/spreadsheets/d/1k3i0Gkpnb8ro1AoAC-w6mW_a74fw7GfsrW9wOj9yIkc/gviz/tq?tqx=out:csv',
+  cours:   'https://docs.google.com/spreadsheets/d/1LGKAyuNxGpE9FqQ316N0U1MCCkKfJ00l3xhSILgGyOo/gviz/tq?tqx=out:csv'
+};
+
+let donneesSoirees = [];
+let filtreActif = 'tous';
+
+function parseCsv(texte) {
+  const lignes = texte.trim().split(/\r?\n/);
+  const entetes = parseLigneCsv(lignes[0]);
+  return lignes.slice(1).map(l => {
+    const vals = parseLigneCsv(l);
+    const obj = {};
+    entetes.forEach((h, i) => obj[h] = (vals[i] || '').trim());
+    return obj;
+  });
+}
+
+function parseLigneCsv(ligne) {
+  const res = []; let cur = ''; let inQ = false;
+  for (let i = 0; i < ligne.length; i++) {
+    const c = ligne[i];
+    if (c === '"') {
+      if (inQ && ligne[i+1] === '"') { cur += '"'; i++; }
+      else inQ = !inQ;
+    } else if (c === ',' && !inQ) { res.push(cur); cur = ''; }
+    else cur += c;
+  }
+  res.push(cur); return res;
+}
+
+function formaterDate(d) {
+  if (!d) return '';
+  const [y, m, j] = d.split('-');
+  if (!y || !m || !j) return d;
+  const mois = ['jan.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  return `${parseInt(j)} ${mois[parseInt(m)-1]} ${y}`;
+}
+
+function formaterPeriode(debut, fin) {
+  if (!debut) return '';
+  if (!fin || debut === fin) return formaterDate(debut);
+  const [dy, dm] = debut.split('-');
+  const [fy, fm] = fin.split('-');
+  if (dy === fy && dm === fm) {
+    const d = debut.split('-')[2];
+    return `Du ${parseInt(d)} au ${formaterDate(fin)}`;
+  }
+  return `Du ${formaterDate(debut)} au ${formaterDate(fin)}`;
+}
+
+function carteSoiree(ev) {
+  const est_sociale = ev['Type'] === 'En ligne + sociale';
+  const prix = ev['Prix'];
+  const prixHtml = prix
+    ? `<span class="carte-prix ${prix.toLowerCase()==='gratuit'?'':'payant'}">${prix}</span>`
+    : '';
+  const periode = formaterPeriode(ev['Date début'], ev['Date fin']);
+  const horaire = ev['Heure début']
+    ? `${ev['Heure début']}${ev['Heure fin'] ? ' à ' + ev['Heure fin'] : ''}`
+    : '';
+  const lieu = [ev['Lieu / Centre'], ev['Adresse']].filter(Boolean).join(' — ');
+  const precisions = ev['Précisions'];
+  const urlSrc = ev['URL source'];
+  const urlAsso = ev['URL association'];
+
+  return `<div class="carte">
+    <div class="carte-header">
+      <div class="carte-titre">${ev['Organisateur'] || ev['Lieu / Centre'] || 'Activité'}</div>
+      <span class="carte-badge ${est_sociale ? 'badge-sociale' : 'badge-enligne'}">
+        ${est_sociale ? 'En ligne + sociale' : 'En ligne'}
+      </span>
+    </div>
+    <div class="carte-info">
+      ${ev['Jour(s)'] ? `<div class="carte-ligne"><span class="ic">📅</span><span><strong>${ev['Jour(s)']}</strong>${horaire ? ' · ' + horaire : ''}</span></div>` : ''}
+      ${periode ? `<div class="carte-ligne"><span class="ic">🗓</span><span>${periode}</span></div>` : ''}
+      ${lieu ? `<div class="carte-ligne"><span class="ic">📍</span><span>${lieu}</span></div>` : ''}
+      ${ev['Association'] ? `<div class="carte-ligne"><span class="ic">🏛</span><span>${ev['Association']}</span></div>` : ''}
+    </div>
+    ${prixHtml}
+    ${precisions ? `<div class="carte-precisions">${precisions}</div>` : ''}
+    ${(urlSrc || urlAsso) ? `<div class="carte-liens">
+      ${urlSrc ? `<a class="carte-lien" href="${urlSrc}" target="_blank" rel="noopener">Source</a>` : ''}
+      ${urlAsso ? `<a class="carte-lien" href="${urlAsso}" target="_blank" rel="noopener">Association</a>` : ''}
+    </div>` : ''}
+  </div>`;
+}
+
+function carteCours(ev) {
+  const prix = ev['Prix'];
+  const prixHtml = prix
+    ? `<span class="carte-prix ${prix.toLowerCase()==='gratuit'?'':'payant'}">${prix}</span>`
+    : '';
+  const periode = formaterPeriode(ev['Date début'], ev['Date fin']);
+  const horaire = ev['Heure début']
+    ? `${ev['Heure début']}${ev['Heure fin'] ? ' à ' + ev['Heure fin'] : ''}`
+    : '';
+  const lieu = [ev['Lieu / Centre'], ev['Adresse']].filter(Boolean).join(' — ');
+  const urlSrc = ev['URL source'];
+  const urlAsso = ev['URL association'];
+
+  return `<div class="carte">
+    <div class="carte-header">
+      <div class="carte-titre">${ev['Organisateur'] || ev['Lieu / Centre'] || 'Cours'}</div>
+      <span class="carte-badge badge-enligne">Cours</span>
+    </div>
+    <div class="carte-info">
+      ${ev['Jour(s)'] ? `<div class="carte-ligne"><span class="ic">📅</span><span><strong>${ev['Jour(s)']}</strong>${horaire ? ' · ' + horaire : ''}</span></div>` : ''}
+      ${periode ? `<div class="carte-ligne"><span class="ic">🗓</span><span>${periode}</span></div>` : ''}
+      ${lieu ? `<div class="carte-ligne"><span class="ic">📍</span><span>${lieu}</span></div>` : ''}
+      ${ev['Niveau'] ? `<div class="carte-ligne"><span class="ic">🎓</span><span>${ev['Niveau']}</span></div>` : ''}
+      ${ev['Association'] ? `<div class="carte-ligne"><span class="ic">🏛</span><span>${ev['Association']}</span></div>` : ''}
+    </div>
+    ${prixHtml}
+    ${ev['Précisions'] ? `<div class="carte-precisions">${ev['Précisions']}</div>` : ''}
+    ${(urlSrc || urlAsso) ? `<div class="carte-liens">
+      ${urlSrc ? `<a class="carte-lien" href="${urlSrc}" target="_blank" rel="noopener">Source</a>` : ''}
+      ${urlAsso ? `<a class="carte-lien" href="${urlAsso}" target="_blank" rel="noopener">Association</a>` : ''}
+    </div>` : ''}
+  </div>`;
+}
+
+function afficherSoirees(data) {
+  let filtre = filtreActif;
+  let filtrees = data;
+  if (filtre === 'En ligne') filtrees = data.filter(e => e['Type'] === 'En ligne');
+  else if (filtre === 'En ligne + sociale') filtrees = data.filter(e => e['Type'] === 'En ligne + sociale');
+  else if (filtre === 'Oui') filtrees = data.filter(e => e['Récurrent'] === 'Oui');
+  else if (filtre === 'Non') filtrees = data.filter(e => e['Récurrent'] === 'Non');
+
+  const rec = filtrees.filter(e => e['Récurrent'] === 'Oui');
+  const ponc = filtrees.filter(e => e['Récurrent'] === 'Non');
+
+  const grRec = document.getElementById('grille-recurrentes');
+  const grPonc = document.getElementById('grille-ponctuelles');
+
+  grRec.innerHTML = rec.length
+    ? rec.map(carteSoiree).join('')
+    : '<div class="etat">Aucune activité récurrente dans cette catégorie.</div>';
+
+  grPonc.innerHTML = ponc.length
+    ? ponc.map(carteSoiree).join('')
+    : '<div class="etat">Aucune activité ponctuelle dans cette catégorie.</div>';
+
+  document.getElementById('soirees-recurrentes').style.display =
+    (filtre === 'Non') ? 'none' : 'block';
+  document.getElementById('soirees-ponctuelles').style.display =
+    (filtre === 'Oui') ? 'none' : 'block';
+}
+
+function filtrerSoirees(type, btn) {
+  filtreActif = type;
+  document.querySelectorAll('.filtre-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  afficherSoirees(donneesSoirees);
+}
+
+function afficherSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.getElementById('section-' + id).classList.add('visible');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+async function charger() {
+  try {
+    const rSoirees = await fetch(SHEETS.soirees);
+    const tSoirees = await rSoirees.text();
+    donneesSoirees = parseCsv(tSoirees);
+    afficherSoirees(donneesSoirees);
+  } catch(e) {
+    document.getElementById('grille-recurrentes').innerHTML =
+      '<div class="etat">⚠️ Impossible de charger les données. Vérifiez que le Google Sheets est public.</div>';
+  }
+
+  try {
+    const rCours = await fetch(SHEETS.cours);
+    const tCours = await rCours.text();
+    const cours = parseCsv(tCours);
+    const grCours = document.getElementById('grille-cours');
+    grCours.innerHTML = cours.length
+      ? cours.map(carteCours).join('')
+      : '<div class="etat">Aucun cours disponible pour le moment.</div>';
+  } catch(e) {
+    document.getElementById('grille-cours').innerHTML =
+      '<div class="etat">⚠️ Impossible de charger les données.</div>';
+  }
+}
+
+charger();
+</script>
+</body>
+</html>
