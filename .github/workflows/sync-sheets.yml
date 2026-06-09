@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - 'donnees.json'
-  workflow_dispatch:
 
 jobs:
   sync:
@@ -12,6 +11,8 @@ jobs:
     steps:
       - name: Récupérer le dépôt
         uses: actions/checkout@v4
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Envoyer les soirées
         run: |
