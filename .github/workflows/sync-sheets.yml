@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'donnees.json'
+  workflow_dispatch:
 
 jobs:
   sync:
