@@ -611,6 +611,40 @@
       "Précisions": "Annulé en cas de pluie",
       "URL source": "https://montreal.ca/evenements/danse-en-ligne-111332",
       "URL association": ""
+    },
+    {
+      "Type": "En ligne",
+      "Organisateur": "Johanne Riel",
+      "Association": "",
+      "Lieu / Centre": "Piste de danse de l'îlot John-Gallagher",
+      "Adresse": "7000, boul. LaSalle, Montréal (Verdun)",
+      "Récurrent": "Oui",
+      "Jour(s)": "Vendredi",
+      "Heure début": "19h00",
+      "Heure fin": "",
+      "Date début": "2026-06-12",
+      "Date fin": "2026-09-04",
+      "Prix": "Gratuit",
+      "Précisions": "Peut être annulé en cas de mauvaise température",
+      "URL source": "https://montreal.ca/evenements/danse-en-ligne-109703",
+      "URL association": ""
+    },
+    {
+      "Type": "En ligne",
+      "Organisateur": "Johanne Riel",
+      "Association": "",
+      "Lieu / Centre": "Piste de danse de l'îlot John-Gallagher",
+      "Adresse": "7000, boul. LaSalle, Montréal (Verdun)",
+      "Récurrent": "Oui",
+      "Jour(s)": "Dimanche",
+      "Heure début": "13h00",
+      "Heure fin": "",
+      "Date début": "2026-06-14",
+      "Date fin": "2026-10-11",
+      "Prix": "Gratuit",
+      "Précisions": "Peut être annulé en cas de mauvaise température",
+      "URL source": "https://montreal.ca/evenements/danse-en-ligne-109703",
+      "URL association": ""
     }
   ],
   "cours": [
