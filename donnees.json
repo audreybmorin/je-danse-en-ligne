@@ -645,6 +645,23 @@
       "Précisions": "Peut être annulé en cas de mauvaise température",
       "URL source": "https://montreal.ca/evenements/danse-en-ligne-109703",
       "URL association": ""
+    },
+    {
+      "Type": "En ligne",
+      "Organisateur": "",
+      "Association": "",
+      "Lieu / Centre": "Place Sun-Yat-Sen (Quartier chinois)",
+      "Adresse": "1055, rue Clark, Montréal",
+      "Récurrent": "Oui",
+      "Jour(s)": "Mercredi",
+      "Heure début": "18h00",
+      "Heure fin": "",
+      "Date début": "2026-07-08",
+      "Date fin": "2026-09-16",
+      "Prix": "Gratuit",
+      "Précisions": "Annulé en cas de pluie",
+      "URL source": "https://montreal.ca/evenements/danse-en-ligne-50257",
+      "URL association": ""
     }
   ],
   "cours": [
