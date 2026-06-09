@@ -467,7 +467,11 @@ function afficherSoirees(data) {
   else if (filtreActif==='Non') filtrees = data.filter(e=>e['Récurrent']==='Non');
 
   const rec  = trierParJour(filtrees.filter(e=>e['Récurrent']==='Oui'));
-  const ponc = trierParJour(filtrees.filter(e=>e['Récurrent']==='Non'));
+  const ponc = filtrees.filter(e=>e['Récurrent']==='Non').sort((a,b)=>{
+    const da = a['Date début'] || '9999';
+    const db = b['Date début'] || '9999';
+    return da.localeCompare(db);
+  });
 
   const fn = vueActuelle === 'fiches' ? carteSoiree : listeSoiree;
   const cls = vueActuelle === 'fiches' ? 'grille' : 'liste';
