@@ -512,10 +512,20 @@ function afficherSection(id, btn) {
   btn.classList.add('active');
 }
 
+function estActuel(ev) {
+  const fin = ev['Date fin'] || ev['Date début'];
+  if (!fin) return true; // pas de date = toujours visible
+  const aujourd_hui = new Date();
+  aujourd_hui.setHours(0, 0, 0, 0);
+  const dateFin = new Date(fin);
+  return dateFin >= aujourd_hui;
+}
+
 async function charger() {
   try {
     const r = await fetch(SHEETS.soirees);
-    donneesSoirees = parseCsv(await r.text());
+    const toutes = parseCsv(await r.text());
+    donneesSoirees = toutes.filter(estActuel);
     afficherSoirees(donneesSoirees);
   } catch(e) {
     document.getElementById('grille-recurrentes').innerHTML =
@@ -523,7 +533,8 @@ async function charger() {
   }
   try {
     const r = await fetch(SHEETS.cours);
-    donneesCours = parseCsv(await r.text());
+    const tous = parseCsv(await r.text());
+    donneesCours = tous.filter(estActuel);
     afficherCours(donneesCours);
   } catch(e) {
     document.getElementById('grille-cours').innerHTML =
