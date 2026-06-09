@@ -233,7 +233,7 @@
 
 <header>
   <div class="header-top">
-    <div class="logo">Je danse <span>en ligne</span> — Montréal et environs</div>
+    <div class="logo">Je danse <span>en ligne — Montréal et environs</span></div>
   </div>
   <div class="nav-sections">
     <button class="active" onclick="afficherSection('soirees', this)">🎶 Soirées de danse</button>
@@ -450,6 +450,15 @@ function listeCours(ev) {
   </div>`;
 }
 
+const ORDRE_JOURS = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+function trierParJour(arr) {
+  return [...arr].sort((a, b) => {
+    const ia = ORDRE_JOURS.indexOf(a['Jour(s)']);
+    const ib = ORDRE_JOURS.indexOf(b['Jour(s)']);
+    return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+  });
+}
+
 function afficherSoirees(data) {
   let filtrees = data;
   if (filtreActif==='En ligne') filtrees = data.filter(e=>e['Type']==='En ligne');
@@ -457,8 +466,8 @@ function afficherSoirees(data) {
   else if (filtreActif==='Oui') filtrees = data.filter(e=>e['Récurrent']==='Oui');
   else if (filtreActif==='Non') filtrees = data.filter(e=>e['Récurrent']==='Non');
 
-  const rec  = filtrees.filter(e=>e['Récurrent']==='Oui');
-  const ponc = filtrees.filter(e=>e['Récurrent']==='Non');
+  const rec  = trierParJour(filtrees.filter(e=>e['Récurrent']==='Oui'));
+  const ponc = trierParJour(filtrees.filter(e=>e['Récurrent']==='Non'));
 
   const fn = vueActuelle === 'fiches' ? carteSoiree : listeSoiree;
   const cls = vueActuelle === 'fiches' ? 'grille' : 'liste';
