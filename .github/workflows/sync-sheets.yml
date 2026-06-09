@@ -1,0 +1,40 @@
+name: Sync vers Google Sheets
+
+on:
+  push:
+    paths:
+      - 'donnees.json'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Envoyer les soirées
+        run: |
+          SOIREES=$(jq '{onglet: "Soirées", lignes: [.soirees[] | [
+            .["Type"], .["Organisateur"], .["Association"],
+            .["Lieu / Centre"], .["Adresse"], .["Récurrent"],
+            .["Jour(s)"], .["Heure début"], .["Heure fin"],
+            .["Date début"], .["Date fin"], .["Prix"],
+            .["Précisions"], .["URL source"], .["URL association"]
+          ]]}' donnees.json)
+          curl -s -L -X POST "${{ secrets.APPS_SCRIPT_URL }}" \
+            -H "Content-Type: application/json" \
+            -d "$SOIREES"
+
+      - name: Envoyer les cours
+        run: |
+          COURS=$(jq '{onglet: "Cours", lignes: [.cours[] | [
+            .["Organisateur"], .["Association"],
+            .["Lieu / Centre"], .["Adresse"],
+            .["Jour(s)"], .["Heure début"], .["Heure fin"],
+            .["Date début"], .["Date fin"], .["Prix"],
+            .["Niveau"], .["Précisions"],
+            .["URL source"], .["URL association"]
+          ]]}' donnees.json)
+          curl -s -L -X POST "${{ secrets.APPS_SCRIPT_URL }}" \
+            -H "Content-Type: application/json" \
+            -d "$COURS"
