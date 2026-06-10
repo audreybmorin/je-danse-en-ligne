@@ -493,11 +493,16 @@ function afficherSoirees(data) {
 }
 
 function afficherCours(data) {
+  const tries = [...data].sort((a, b) => {
+    const da = a['Date début'] || '9999';
+    const db = b['Date début'] || '9999';
+    return da.localeCompare(db);
+  });
   const fn  = vueActuelleCours === 'fiches' ? carteCours : listeCours;
   const cls = vueActuelleCours === 'fiches' ? 'grille' : 'liste';
   const gr  = document.getElementById('grille-cours');
   gr.className = cls;
-  gr.innerHTML = data.length ? data.map(fn).join('') : '<div class="etat">Aucun cours disponible.</div>';
+  gr.innerHTML = tries.length ? tries.map(fn).join('') : '<div class="etat">Aucun cours disponible.</div>';
 }
 
 function filtrerSoirees(type, btn) {
