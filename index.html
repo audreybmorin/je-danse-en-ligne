@@ -9,222 +9,103 @@
 <link rel="apple-touch-icon" sizes="192x192" href="favicon-192.png">
 <style>
   :root {
-    --rose:    #E8175D;
-    --rose-lt: #fce4ec;
-    --teal:    #00695C;
-    --teal-lt: #E0F2F1;
-    --ink:     #1A1A2E;
-    --muted:   #5C5C7A;
-    --border:  #E0E0EC;
-    --bg:      #F8F8FC;
-    --white:   #FFFFFF;
-    --header-bg: #111111;
+    --rose:       #E8175D;
+    --rose-lt:    #fce4ec;
+    --teal:       #00695C;
+    --teal-lt:    #E0F2F1;
+    --ink:        #1A1A2E;
+    --muted:      #5C5C7A;
+    --border:     #E0E0EC;
+    --bg:         #F8F8FC;
+    --white:      #FFFFFF;
+    --header-bg:  #111111;
     --badge-sociale-bg:  #FFF3E0;
     --badge-sociale-txt: #E65100;
-    --radius:  10px;
-    --shadow:  0 1px 4px rgba(26,26,46,.07);
+    --radius: 10px;
+    --shadow: 0 1px 4px rgba(26,26,46,.07);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--bg); color: var(--ink);
-    line-height: 1.6; font-size: 15px;
-  }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; font-size: 15px; }
 
   /* ── HEADER ── */
-  header {
-    background: var(--header-bg);
-    border-bottom: 2px solid var(--rose);
-    padding: .75rem 1.5rem;
-    position: sticky; top: 0; z-index: 100;
-  }
-  .header-top {
-    display: flex; align-items: center; justify-content: space-between;
-  }
+  header { background: var(--header-bg); border-bottom: 2px solid var(--rose); padding: .75rem 1.5rem; position: sticky; top: 0; z-index: 100; }
   .logo { font-size: 1.1rem; font-weight: 700; color: var(--rose); letter-spacing: -.3px; }
   .logo span { color: #aaa; font-weight: 400; font-size: .8rem; }
 
-  /* ── BASCULE SECTION (grande) ── */
-  .nav-sections {
-    display: flex; justify-content: center;
-    gap: .75rem; margin-top: .75rem;
-  }
-  .nav-sections button {
-    flex: 1; max-width: 220px;
-    padding: .65rem 1.5rem;
-    border: 2px solid #333;
-    border-radius: 30px;
-    background: #222;
-    font-size: 1rem; font-weight: 700;
-    color: #888; cursor: pointer;
-    transition: all .15s;
-  }
-  .nav-sections button.active {
-    background: var(--rose); border-color: var(--rose);
-    color: var(--white);
-  }
-  .nav-sections button:not(.active):hover {
-    border-color: var(--rose); color: var(--rose);
-  }
-
   /* ── BANDEAU ── */
-  .bandeau {
-    background: linear-gradient(135deg, var(--rose) 0%, #880E4F 100%);
-    color: white; text-align: center;
-    padding: .6rem 1rem; font-size: .88rem; letter-spacing: .3px;
-  }
+  .bandeau { background: var(--rose); color: white; text-align: center; padding: .6rem 1rem; font-size: .88rem; }
+  .bandeau a { color: white; font-weight: 700; text-decoration: underline; }
 
-  /* ── BARRE OUTILS (filtres + vue) ── */
-  .barre-outils {
-    display: flex; align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap; gap: .5rem;
-    margin-bottom: 1.25rem;
-  }
+  /* ── BARRE OUTILS ── */
+  .barre-outils { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.25rem; }
   .filtres { display: flex; gap: .4rem; flex-wrap: wrap; align-items: center; }
-  .filtre-label {
-    font-size: .75rem; color: var(--muted);
-    font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
-  }
-  .filtre-btn {
-    background: var(--white); border: 1px solid var(--border);
-    border-radius: 20px; padding: .28rem .8rem;
-    font-size: .8rem; cursor: pointer;
-    color: var(--muted); transition: all .15s;
-  }
+  .filtre-label { font-size: .75rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+  .filtre-btn { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: .28rem .8rem; font-size: .8rem; cursor: pointer; color: var(--muted); transition: all .15s; }
   .filtre-btn.active { background: var(--rose); border-color: var(--rose); color: white; }
 
   /* ── BASCULE VUE ── */
-  .vue-bascule {
-    display: flex; gap: .25rem;
-    background: var(--bg); border: 1px solid var(--border);
-    border-radius: 8px; padding: 3px;
-  }
-  .vue-btn {
-    background: none; border: none; cursor: pointer;
-    padding: .3rem .6rem; border-radius: 6px;
-    font-size: .8rem; color: var(--muted);
-    transition: all .15s; display: flex; align-items: center; gap: .3rem;
-  }
+  .vue-bascule { display: flex; gap: .25rem; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 3px; }
+  .vue-btn { background: none; border: none; cursor: pointer; padding: .3rem .6rem; border-radius: 6px; font-size: .8rem; color: var(--muted); transition: all .15s; }
   .vue-btn.active { background: var(--white); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
 
   /* ── MAIN ── */
-  main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
-  .section { display: none; }
-  .section.visible { display: block; }
+  main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
 
-  /* ── SOUS-TITRE ── */
-  .sous-titre {
-    font-size: .72rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--muted);
-    margin: 1.5rem 0 .75rem;
-    display: flex; align-items: center; gap: .5rem;
+  /* ── DIVISEUR SAISON ── */
+  .saison-titre {
+    font-size: .75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--white);
+    background: var(--ink); padding: .35rem .9rem;
+    border-radius: 20px; display: inline-block;
+    margin: 1.75rem 0 .85rem;
   }
-  .sous-titre::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .saison-section:first-child .saison-titre { margin-top: .25rem; }
 
-  /* ══ VUE FICHES ══ */
-  .grille {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1rem;
-  }
-  .carte {
-    background: var(--white); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 1rem 1.1rem;
-    box-shadow: var(--shadow);
-    display: flex; flex-direction: column; gap: .5rem;
-    transition: box-shadow .15s, transform .1s;
-  }
+  /* ── GRILLE ── */
+  .grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+
+  /* ── CARTE ── */
+  .carte { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.1rem; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: .5rem; transition: box-shadow .15s, transform .1s; }
   .carte:hover { box-shadow: 0 4px 14px rgba(26,26,46,.1); transform: translateY(-1px); }
   .carte-header { display: flex; justify-content: space-between; align-items: flex-start; }
   .carte-titre { font-size: .95rem; font-weight: 700; color: var(--ink); line-height: 1.3; }
-  .carte-badge {
-    font-size: .65rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .4px; padding: .2rem .5rem;
-    border-radius: 12px; white-space: nowrap; flex-shrink: 0; margin-left: .5rem;
-  }
+  .carte-badge { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; padding: .2rem .5rem; border-radius: 12px; white-space: nowrap; flex-shrink: 0; margin-left: .5rem; }
   .badge-enligne { background: var(--teal-lt); color: var(--teal); }
-  .badge-sociale  { background: var(--badge-sociale-bg); color: var(--badge-sociale-txt); }
+  .badge-sociale { background: var(--badge-sociale-bg); color: var(--badge-sociale-txt); }
+  .badge-cours { background: #EDE7F6; color: #4527A0; }
   .carte-info { display: flex; flex-direction: column; gap: .3rem; }
-  .carte-ligne {
-    display: flex; align-items: flex-start; gap: .5rem;
-    font-size: .82rem; color: var(--muted);
-  }
+  .carte-ligne { display: flex; align-items: flex-start; gap: .5rem; font-size: .82rem; color: var(--muted); }
   .carte-ligne .ic { font-size: .9rem; flex-shrink: 0; margin-top: .05rem; }
   .carte-ligne strong { color: var(--ink); font-weight: 600; }
-  .carte-prix {
-    display: inline-block; font-size: .8rem; font-weight: 700;
-    padding: .15rem .6rem; border-radius: 12px;
-    background: var(--teal-lt); color: var(--teal); align-self: flex-start;
-  }
+  .carte-prix { display: inline-block; font-size: .8rem; font-weight: 700; padding: .15rem .6rem; border-radius: 12px; background: var(--teal-lt); color: var(--teal); align-self: flex-start; }
   .carte-prix.payant { background: #FFF8E1; color: #F57F17; }
-  .carte-precisions {
-    font-size: .77rem; color: var(--muted);
-    border-top: 1px dashed var(--border);
-    padding-top: .4rem; line-height: 1.5;
-  }
+  .carte-precisions { font-size: .77rem; color: var(--muted); border-top: 1px dashed var(--border); padding-top: .4rem; line-height: 1.5; }
   .carte-liens { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .2rem; }
-  .carte-lien {
-    font-size: .73rem; color: var(--rose); text-decoration: none;
-    border: 1px solid var(--rose-lt); border-radius: 12px;
-    padding: .12rem .55rem; transition: background .1s;
-  }
+  .carte-lien { font-size: .73rem; color: var(--rose); text-decoration: none; border: 1px solid var(--rose-lt); border-radius: 12px; padding: .12rem .55rem; transition: background .1s; }
   .carte-lien:hover { background: var(--rose-lt); }
 
-  /* ══ VUE LISTE ══ */
+  /* ── LISTE ── */
   .liste { display: flex; flex-direction: column; gap: .4rem; }
-  .liste-item {
-    background: var(--white); border: 1px solid var(--border);
-    border-radius: 8px; padding: .65rem 1rem;
-    display: grid;
-    grid-template-columns: minmax(0,2fr) minmax(0,1.5fr) minmax(0,1.2fr) auto;
-    align-items: center; gap: .75rem;
-    transition: background .1s;
-  }
+  .liste-item { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: .65rem 1rem; display: grid; grid-template-columns: minmax(0,2fr) minmax(0,1.5fr) minmax(0,1.2fr) auto; align-items: center; gap: .75rem; transition: background .1s; }
   .liste-item:hover { background: var(--rose-lt); }
   .liste-nom { font-size: .88rem; font-weight: 700; color: var(--ink); }
   .liste-lieu { font-size: .8rem; color: var(--muted); }
   .liste-horaire { font-size: .8rem; color: var(--muted); }
-  .liste-badge {
-    font-size: .62rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .3px; padding: .18rem .5rem;
-    border-radius: 10px; white-space: nowrap; text-align: center;
-  }
-  .liste-prix {
-    font-size: .78rem; font-weight: 700;
-    color: var(--teal); white-space: nowrap;
-  }
+  .liste-badge { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; padding: .18rem .5rem; border-radius: 10px; white-space: nowrap; text-align: center; }
+  .liste-prix { font-size: .78rem; font-weight: 700; color: var(--teal); white-space: nowrap; }
   .liste-prix.payant { color: #F57F17; }
-  .liste-detail {
-    grid-column: 1 / -1;
-    font-size: .75rem; color: var(--muted);
-    padding-top: .3rem; border-top: 1px dashed var(--border);
-    margin-top: .2rem; line-height: 1.5;
-    display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
-  }
-  .liste-detail a {
-    color: var(--rose); text-decoration: none; font-size: .73rem;
-    border: 1px solid var(--rose-lt); border-radius: 10px; padding: .1rem .45rem;
-  }
+  .liste-detail { grid-column: 1 / -1; font-size: .75rem; color: var(--muted); padding-top: .3rem; border-top: 1px dashed var(--border); margin-top: .2rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  .liste-detail a { color: var(--rose); text-decoration: none; font-size: .73rem; border: 1px solid var(--rose-lt); border-radius: 10px; padding: .1rem .45rem; }
   .liste-detail a:hover { background: var(--rose-lt); }
 
   /* ── ÉTAT ── */
-  .etat {
-    text-align: center; padding: 3rem 1rem;
-    color: var(--muted); font-size: .95rem;
-    grid-column: 1 / -1;
-  }
+  .etat { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: .95rem; }
   .etat .ic-big { font-size: 2.5rem; display: block; margin-bottom: .75rem; }
 
   /* ── FOOTER ── */
-  footer {
-    text-align: center; padding: 2rem 1rem;
-    font-size: .78rem; color: var(--muted);
-    border-top: 1px solid var(--border); margin-top: 2rem;
-  }
+  footer { text-align: center; padding: 2rem 1rem; font-size: .78rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 2rem; }
 
   @media (max-width: 600px) {
-    .nav-sections button { font-size: .9rem; padding: .55rem 1rem; }
     .grille { grid-template-columns: 1fr; }
     .liste-item { grid-template-columns: 1fr auto; }
     .liste-lieu, .liste-horaire { display: none; }
@@ -235,67 +116,34 @@
 <body>
 
 <header>
-  <div class="header-top">
-    <div class="logo">DELmtl <span>— répertoire d'événements et de cours de danse en ligne sociale dans le Grand Montréal</span></div>
-  </div>
-  <div class="nav-sections">
-    <button class="active" onclick="afficherSection('soirees', this)">🎶 Soirées et événements</button>
-    <button onclick="afficherSection('cours', this)">🎓 Cours et ateliers</button>
-  </div>
+  <div class="logo">DELmtl <span>— répertoire d'événements et de cours de danse en ligne sociale dans le Grand Montréal</span></div>
 </header>
 
 <div class="bandeau">
-  Il manque quelque chose? <a href="mailto:info@delmtl.ca" style="color:white;font-weight:700;text-decoration:underline;">Écrivez-nous!</a>
+  Il manque quelque chose? <a href="mailto:info@delmtl.ca">Écrivez-nous!</a>
 </div>
 
 <main>
-  <!-- ══ SOIRÉES ══ -->
-  <section class="section visible" id="section-soirees">
-    <div class="barre-outils">
-      <div class="filtres">
-        <span class="filtre-label">Filtrer&nbsp;:</span>
-        <button class="filtre-btn active" onclick="filtrerSoirees('tous', this)">Toutes</button>
-        <button class="filtre-btn" onclick="filtrerSoirees('En ligne', this)">En ligne</button>
-        <button class="filtre-btn" onclick="filtrerSoirees('En ligne + sociale', this)">En ligne + sociale</button>
-        <button class="filtre-btn" onclick="filtrerSoirees('Oui', this)">Récurrentes</button>
-        <button class="filtre-btn" onclick="filtrerSoirees('Non', this)">Ponctuelles</button>
-      </div>
-      <div class="vue-bascule">
-        <button class="vue-btn active" id="btn-fiches" onclick="basculerVue('fiches')">⊞ Fiches</button>
-        <button class="vue-btn" id="btn-liste" onclick="basculerVue('liste')">☰ Liste</button>
-      </div>
+  <div class="barre-outils">
+    <div class="filtres">
+      <span class="filtre-label">Filtrer&nbsp;:</span>
+      <button class="filtre-btn active" onclick="filtrer('tous', this)">Tout</button>
+      <button class="filtre-btn" onclick="filtrer('soirees', this)">🎶 Soirées et événements</button>
+      <button class="filtre-btn" onclick="filtrer('cours', this)">🎓 Cours et ateliers</button>
     </div>
+    <div class="vue-bascule">
+      <button class="vue-btn active" id="btn-fiches" onclick="basculerVue('fiches')">⊞ Fiches</button>
+      <button class="vue-btn" id="btn-liste" onclick="basculerVue('liste')">☰ Liste</button>
+    </div>
+  </div>
 
-    <div id="soirees-recurrentes">
-      <div class="sous-titre">Activités récurrentes</div>
-      <div class="grille" id="grille-recurrentes">
-        <div class="etat"><span class="ic-big">⏳</span>Chargement…</div>
-      </div>
-    </div>
-    <div id="soirees-ponctuelles">
-      <div class="sous-titre">Activités ponctuelles</div>
-      <div class="grille" id="grille-ponctuelles">
-        <div class="etat"><span class="ic-big">⏳</span>Chargement…</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ COURS ══ -->
-  <section class="section" id="section-cours">
-    <div class="barre-outils" style="justify-content:flex-end;">
-      <div class="vue-bascule">
-        <button class="vue-btn active" id="btn-fiches-cours" onclick="basculerVueCours('fiches')">⊞ Fiches</button>
-        <button class="vue-btn" id="btn-liste-cours" onclick="basculerVueCours('liste')">☰ Liste</button>
-      </div>
-    </div>
-    <div class="grille" id="grille-cours">
-      <div class="etat"><span class="ic-big">⏳</span>Chargement…</div>
-    </div>
-  </section>
+  <div id="contenu">
+    <div class="etat"><span class="ic-big">⏳</span>Chargement…</div>
+  </div>
 </main>
 
 <footer>
-  Données mises à jour régulièrement &bull; Grand Montréal &bull; Danse en ligne sociale
+  DELmtl.ca &bull; danse en ligne sociale &bull; Grand Montréal
 </footer>
 
 <script>
@@ -305,11 +153,15 @@ const SHEETS = {
   cours:   `https://docs.google.com/spreadsheets/d/${SHEETS_ID}/gviz/tq?tqx=out:csv&sheet=Cours`
 };
 
-let donneesSoirees = [];
-let donneesCours   = [];
+let toutesEntrees = [];
 let filtreActif = 'tous';
 let vueActuelle = 'fiches';
-let vueActuelleCours = 'fiches';
+
+const ORDRE_SAISONS = [
+  'Printemps 2025','Été 2025','Automne 2025','Hiver 2026','Printemps 2026',
+  'Été 2026','Automne 2026','Hiver 2027','Printemps 2027','Été 2027',
+  'Automne 2027','Hiver 2028','Printemps 2028','Été 2028'
+];
 
 function parseCsv(texte) {
   const lignes = texte.trim().split(/\r?\n/);
@@ -332,11 +184,17 @@ function parseLigne(l) {
   res.push(cur); return res;
 }
 
+function estActuel(ev) {
+  const fin = ev['Date fin'] || ev['Date début'];
+  if (!fin) return true;
+  const aujourd_hui = new Date(); aujourd_hui.setHours(0,0,0,0);
+  return new Date(fin) >= aujourd_hui;
+}
+
 function fmtDate(d) {
   if (!d) return '';
   const [y,m,j] = d.split('-');
-  if (!y||!m||!j) return d;
-  const mois=['jan.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  const mois = ['jan.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
   return `${parseInt(j)} ${mois[parseInt(m)-1]} ${y}`;
 }
 function fmtPeriode(debut, fin) {
@@ -349,9 +207,17 @@ function fmtHoraire(ev) {
   return ev['Heure fin'] ? `${ev['Heure début']} à ${ev['Heure fin']}` : ev['Heure début'];
 }
 
-// ── FICHES SOIRÉE ──
-function carteSoiree(ev) {
+function badgeSoiree(ev) {
   const sociale = ev['Type'] === 'En ligne + sociale';
+  return `<span class="carte-badge ${sociale?'badge-sociale':'badge-enligne'}">${sociale?'+ sociale':'Soirée'}</span>`;
+}
+function badgeSoireeListe(ev) {
+  const sociale = ev['Type'] === 'En ligne + sociale';
+  return `<span class="liste-badge ${sociale?'badge-sociale':'badge-enligne'}">${sociale?'+ sociale':'Soirée'}</span>`;
+}
+
+// ── FICHES ──
+function carteSoiree(ev) {
   const prix = ev['Prix'];
   const prixHtml = prix ? `<span class="carte-prix ${prix.toLowerCase()==='gratuit'?'':'payant'}">${prix}</span>` : '';
   const periode = fmtPeriode(ev['Date début'], ev['Date fin']);
@@ -360,7 +226,7 @@ function carteSoiree(ev) {
   return `<div class="carte">
     <div class="carte-header">
       <div class="carte-titre">${ev['Organisateur'] || ev['Lieu / Centre'] || 'Activité'}</div>
-      <span class="carte-badge ${sociale?'badge-sociale':'badge-enligne'}">${sociale?'+ sociale':'En ligne'}</span>
+      ${badgeSoiree(ev)}
     </div>
     <div class="carte-info">
       ${ev['Jour(s)'] ? `<div class="carte-ligne"><span class="ic">📅</span><span><strong>${ev['Jour(s)']}</strong>${horaire?' · '+horaire:''}</span></div>` : ''}
@@ -376,33 +242,6 @@ function carteSoiree(ev) {
   </div>`;
 }
 
-// ── LISTE SOIRÉE ──
-function listeSoiree(ev) {
-  const sociale = ev['Type'] === 'En ligne + sociale';
-  const prix = ev['Prix'];
-  const prixHtml = prix ? `<span class="liste-prix ${prix.toLowerCase()==='gratuit'?'':'payant'}">${prix}</span>` : '';
-  const periode = fmtPeriode(ev['Date début'], ev['Date fin']);
-  const horaire = fmtHoraire(ev);
-  const lieu = [ev['Lieu / Centre'], ev['Adresse']].filter(Boolean).join(' — ');
-  const hasDetail = ev['Précisions'] || ev['URL source'] || ev['URL association'] || periode;
-  return `<div class="liste-item">
-    <div class="liste-nom">${ev['Organisateur'] || ev['Lieu / Centre'] || 'Activité'}</div>
-    <div class="liste-lieu">${lieu}</div>
-    <div class="liste-horaire">${ev['Jour(s)']?ev['Jour(s)']:''} ${horaire}</div>
-    <div style="display:flex;gap:.4rem;align-items:center;">
-      <span class="liste-badge ${sociale?'badge-sociale':'badge-enligne'}">${sociale?'+ sociale':'En ligne'}</span>
-      ${prixHtml}
-    </div>
-    ${hasDetail ? `<div class="liste-detail">
-      ${periode ? `<span>🗓 ${periode}</span>` : ''}
-      ${ev['Précisions'] ? `<span>${ev['Précisions']}</span>` : ''}
-      ${ev['URL source'] ? `<a href="${ev['URL source']}" target="_blank" rel="noopener">Source</a>` : ''}
-      ${ev['URL association'] ? `<a href="${ev['URL association']}" target="_blank" rel="noopener">Association</a>` : ''}
-    </div>` : ''}
-  </div>`;
-}
-
-// ── FICHES COURS ──
 function carteCours(ev) {
   const prix = ev['Prix'];
   const prixHtml = prix ? `<span class="carte-prix ${prix.toLowerCase()==='gratuit'?'':'payant'}">${prix}</span>` : '';
@@ -412,7 +251,7 @@ function carteCours(ev) {
   return `<div class="carte">
     <div class="carte-header">
       <div class="carte-titre">${ev['Organisateur'] || ev['Lieu / Centre'] || 'Cours'}</div>
-      <span class="carte-badge badge-enligne">Cours</span>
+      <span class="carte-badge badge-cours">Cours</span>
     </div>
     <div class="carte-info">
       ${ev['Jour(s)'] ? `<div class="carte-ligne"><span class="ic">📅</span><span><strong>${ev['Jour(s)']}</strong>${horaire?' · '+horaire:''}</span></div>` : ''}
@@ -429,7 +268,26 @@ function carteCours(ev) {
   </div>`;
 }
 
-// ── LISTE COURS ──
+// ── LISTE ──
+function listeSoiree(ev) {
+  const prix = ev['Prix'];
+  const prixHtml = prix ? `<span class="liste-prix ${prix.toLowerCase()==='gratuit'?'':'payant'}">${prix}</span>` : '';
+  const periode = fmtPeriode(ev['Date début'], ev['Date fin']);
+  const horaire = fmtHoraire(ev);
+  const lieu = [ev['Lieu / Centre'], ev['Adresse']].filter(Boolean).join(' — ');
+  return `<div class="liste-item">
+    <div class="liste-nom">${ev['Organisateur'] || ev['Lieu / Centre'] || 'Activité'}</div>
+    <div class="liste-lieu">${lieu}</div>
+    <div class="liste-horaire">${ev['Jour(s)']||''} ${horaire}</div>
+    <div style="display:flex;gap:.4rem;align-items:center;">${badgeSoireeListe(ev)}${prixHtml}</div>
+    ${(periode||ev['Précisions']||ev['URL source']) ? `<div class="liste-detail">
+      ${periode ? `<span>🗓 ${periode}</span>` : ''}
+      ${ev['Précisions'] ? `<span>${ev['Précisions']}</span>` : ''}
+      ${ev['URL source'] ? `<a href="${ev['URL source']}" target="_blank" rel="noopener">Source</a>` : ''}
+    </div>` : ''}
+  </div>`;
+}
+
 function listeCours(ev) {
   const prix = ev['Prix'];
   const prixHtml = prix ? `<span class="liste-prix ${prix.toLowerCase()==='gratuit'?'':'payant'}">${prix}</span>` : '';
@@ -439,11 +297,8 @@ function listeCours(ev) {
   return `<div class="liste-item">
     <div class="liste-nom">${ev['Organisateur'] || ev['Lieu / Centre'] || 'Cours'}</div>
     <div class="liste-lieu">${lieu}</div>
-    <div class="liste-horaire">${ev['Jour(s)']?ev['Jour(s)']:''} ${horaire}</div>
-    <div style="display:flex;gap:.4rem;align-items:center;">
-      <span class="liste-badge badge-enligne">Cours</span>
-      ${prixHtml}
-    </div>
+    <div class="liste-horaire">${ev['Jour(s)']||''} ${horaire}</div>
+    <div style="display:flex;gap:.4rem;align-items:center;"><span class="liste-badge badge-cours">Cours</span>${prixHtml}</div>
     ${(periode||ev['Niveau']||ev['Précisions']||ev['URL source']) ? `<div class="liste-detail">
       ${periode ? `<span>🗓 ${periode}</span>` : ''}
       ${ev['Niveau'] ? `<span>🎓 ${ev['Niveau']}</span>` : ''}
@@ -453,116 +308,96 @@ function listeCours(ev) {
   </div>`;
 }
 
-const ORDRE_JOURS = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
-function trierParJour(arr) {
-  return [...arr].sort((a, b) => {
-    const ia = ORDRE_JOURS.indexOf(a['Jour(s)']);
-    const ib = ORDRE_JOURS.indexOf(b['Jour(s)']);
-    return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
-  });
-}
+function afficher() {
+  let entrees = toutesEntrees;
+  if (filtreActif === 'soirees') entrees = entrees.filter(e => e._type === 'soiree');
+  if (filtreActif === 'cours')   entrees = entrees.filter(e => e._type === 'cours');
 
-function afficherSoirees(data) {
-  let filtrees = data;
-  if (filtreActif==='En ligne') filtrees = data.filter(e=>e['Type']==='En ligne');
-  else if (filtreActif==='En ligne + sociale') filtrees = data.filter(e=>e['Type']==='En ligne + sociale');
-  else if (filtreActif==='Oui') filtrees = data.filter(e=>e['Récurrent']==='Oui');
-  else if (filtreActif==='Non') filtrees = data.filter(e=>e['Récurrent']==='Non');
-
-  const rec  = trierParJour(filtrees.filter(e=>e['Récurrent']==='Oui'));
-  const ponc = filtrees.filter(e=>e['Récurrent']==='Non').sort((a,b)=>{
-    const da = a['Date début'] || '9999';
-    const db = b['Date début'] || '9999';
-    return da.localeCompare(db);
+  // Grouper par saison
+  const parSaison = {};
+  entrees.forEach(ev => {
+    const s = ev['Saison'] || 'Non classé';
+    if (!parSaison[s]) parSaison[s] = [];
+    parSaison[s].push(ev);
   });
 
-  const fn = vueActuelle === 'fiches' ? carteSoiree : listeSoiree;
+  // Trier les saisons selon l'ordre défini
+  const saisonsPresentes = ORDRE_SAISONS.filter(s => parSaison[s]);
+  if (parSaison['Non classé']) saisonsPresentes.push('Non classé');
+
+  if (saisonsPresentes.length === 0) {
+    document.getElementById('contenu').innerHTML = '<div class="etat">Aucun résultat.</div>';
+    return;
+  }
+
+  const ORDRE_JOURS = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
   const cls = vueActuelle === 'fiches' ? 'grille' : 'liste';
 
-  const grRec  = document.getElementById('grille-recurrentes');
-  const grPonc = document.getElementById('grille-ponctuelles');
+  let html = '';
+  saisonsPresentes.forEach(saison => {
+    const items = parSaison[saison];
 
-  grRec.className  = cls;
-  grPonc.className = cls;
+    // Trier : soirées par jour, cours par date
+    const soirees = items.filter(e => e._type === 'soiree')
+      .sort((a,b) => {
+        const ia = ORDRE_JOURS.indexOf(a['Jour(s)']);
+        const ib = ORDRE_JOURS.indexOf(b['Jour(s)']);
+        return (ia===-1?99:ia)-(ib===-1?99:ib);
+      });
+    const cours = items.filter(e => e._type === 'cours')
+      .sort((a,b) => (a['Date début']||'').localeCompare(b['Date début']||''));
 
-  grRec.innerHTML  = rec.length  ? rec.map(fn).join('')  : '<div class="etat">Aucune activité récurrente.</div>';
-  grPonc.innerHTML = ponc.length ? ponc.map(fn).join('') : '<div class="etat">Aucune activité ponctuelle.</div>';
+    const ordonnes = [...soirees, ...cours];
 
-  document.getElementById('soirees-recurrentes').style.display = filtreActif==='Non' ? 'none' : 'block';
-  document.getElementById('soirees-ponctuelles').style.display = filtreActif==='Oui' ? 'none' : 'block';
-}
+    html += `<div class="saison-section">
+      <div class="saison-titre">${saison}</div>
+      <div class="${cls}">`;
 
-function afficherCours(data) {
-  const tries = [...data].sort((a, b) => {
-    const da = a['Date début'] || '';
-    const db = b['Date début'] || '';
-    if (!da && !db) return 0;
-    if (!da) return 1;
-    if (!db) return -1;
-    return da < db ? -1 : da > db ? 1 : 0;
+    ordonnes.forEach(ev => {
+      if (ev._type === 'soiree') {
+        html += vueActuelle === 'fiches' ? carteSoiree(ev) : listeSoiree(ev);
+      } else {
+        html += vueActuelle === 'fiches' ? carteCours(ev) : listeCours(ev);
+      }
+    });
+
+    html += `</div></div>`;
   });
-  const fn  = vueActuelleCours === 'fiches' ? carteCours : listeCours;
-  const cls = vueActuelleCours === 'fiches' ? 'grille' : 'liste';
-  const gr  = document.getElementById('grille-cours');
-  gr.className = cls;
-  gr.innerHTML = tries.length ? tries.map(fn).join('') : '<div class="etat">Aucun cours disponible.</div>';
+
+  document.getElementById('contenu').innerHTML = html;
 }
 
-function filtrerSoirees(type, btn) {
+function filtrer(type, btn) {
   filtreActif = type;
-  document.querySelectorAll('.filtre-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.filtre-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  afficherSoirees(donneesSoirees);
+  afficher();
 }
 
 function basculerVue(v) {
   vueActuelle = v;
   document.getElementById('btn-fiches').classList.toggle('active', v==='fiches');
-  document.getElementById('btn-liste').classList.toggle('active',  v==='liste');
-  afficherSoirees(donneesSoirees);
-}
-
-function basculerVueCours(v) {
-  vueActuelleCours = v;
-  document.getElementById('btn-fiches-cours').classList.toggle('active', v==='fiches');
-  document.getElementById('btn-liste-cours').classList.toggle('active',  v==='liste');
-  afficherCours(donneesCours);
-}
-
-function afficherSection(id, btn) {
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('visible'));
-  document.getElementById('section-'+id).classList.add('visible');
-  document.querySelectorAll('.nav-sections button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+  document.getElementById('btn-liste').classList.toggle('active', v==='liste');
+  afficher();
 }
 
 function estActuel(ev) {
   const fin = ev['Date fin'] || ev['Date début'];
-  if (!fin) return true; // pas de date = toujours visible
-  const aujourd_hui = new Date();
-  aujourd_hui.setHours(0, 0, 0, 0);
-  const dateFin = new Date(fin);
-  return dateFin >= aujourd_hui;
+  if (!fin) return true;
+  const aujourd_hui = new Date(); aujourd_hui.setHours(0,0,0,0);
+  return new Date(fin) >= aujourd_hui;
 }
 
 async function charger() {
   try {
-    const r = await fetch(SHEETS.soirees);
-    const toutes = parseCsv(await r.text());
-    donneesSoirees = toutes.filter(estActuel);
-    afficherSoirees(donneesSoirees);
+    const [rS, rC] = await Promise.all([fetch(SHEETS.soirees), fetch(SHEETS.cours)]);
+    const soirees = parseCsv(await rS.text()).filter(estActuel).map(e => ({...e, _type:'soiree'}));
+    const cours   = parseCsv(await rC.text()).filter(estActuel).map(e => ({...e, _type:'cours'}));
+    toutesEntrees = [...soirees, ...cours];
+    afficher();
   } catch(e) {
-    document.getElementById('grille-recurrentes').innerHTML =
+    document.getElementById('contenu').innerHTML =
       '<div class="etat">⚠️ Impossible de charger les données. Vérifiez que le Google Sheets est public.</div>';
-  }
-  try {
-    const r = await fetch(SHEETS.cours);
-    const tous = parseCsv(await r.text());
-    donneesCours = tous.filter(estActuel);
-    afficherCours(donneesCours);
-  } catch(e) {
-    document.getElementById('grille-cours').innerHTML =
-      '<div class="etat">⚠️ Impossible de charger les données.</div>';
   }
 }
 
