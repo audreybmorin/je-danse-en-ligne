@@ -130,6 +130,9 @@
       <button class="filtre-btn active" onclick="filtrer('tous', this)">Tout</button>
       <button class="filtre-btn" onclick="filtrer('soirees', this)">🎶 Soirées et événements</button>
       <button class="filtre-btn" onclick="filtrer('cours', this)">🎓 Cours et ateliers</button>
+      <button class="filtre-btn" onclick="filtrer('enligne', this)">En ligne seulement</button>
+      <button class="filtre-btn" onclick="filtrer('sociale', this)">En ligne + sociale</button>
+      <button class="filtre-btn" onclick="filtrer('gratuit', this)">Gratuit</button>
     </div>
     <div class="vue-bascule">
       <button class="vue-btn active" id="btn-fiches" onclick="basculerVue('fiches')">⊞ Fiches</button>
@@ -310,8 +313,11 @@ function listeCours(ev) {
 
 function afficher() {
   let entrees = toutesEntrees;
-  if (filtreActif === 'soirees') entrees = entrees.filter(e => e._type === 'soiree');
-  if (filtreActif === 'cours')   entrees = entrees.filter(e => e._type === 'cours');
+  if (filtreActif === 'soirees')  entrees = entrees.filter(e => e._type === 'soiree');
+  if (filtreActif === 'cours')    entrees = entrees.filter(e => e._type === 'cours');
+  if (filtreActif === 'enligne')  entrees = entrees.filter(e => e._type === 'soiree' && e['Type'] === 'En ligne');
+  if (filtreActif === 'sociale')  entrees = entrees.filter(e => e._type === 'soiree' && e['Type'] === 'En ligne + sociale');
+  if (filtreActif === 'gratuit')  entrees = entrees.filter(e => (e['Prix'] || '').toLowerCase() === 'gratuit');
 
   // Grouper par saison
   const parSaison = {};
