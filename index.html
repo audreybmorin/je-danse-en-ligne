@@ -122,6 +122,27 @@
   .etat { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: .95rem; }
   .etat .ic-big { font-size: 2.5rem; display: block; margin-bottom: .75rem; }
 
+  /* ── CETTE SEMAINE ── */
+  .sw-toggle { display: flex; align-items: center; gap: 10px; background: var(--header-bg); border: none; border-bottom: 2px solid var(--rose); padding: .65rem 1.5rem; cursor: pointer; width: 100%; }
+  .sw-toggle-label { font-size: .95rem; font-weight: 700; color: white; flex: 1; text-align: left; }
+  .sw-toggle-count { font-size: .75rem; background: var(--rose); color: white; border-radius: 20px; padding: 2px 9px; font-weight: 700; }
+  .sw-toggle-chevron { font-size: 1.1rem; color: #aaa; transition: transform .2s; }
+  .sw-toggle-chevron.open { transform: rotate(180deg); }
+  .sw-panel { background: var(--white); border-bottom: 1px solid var(--border); display: none; }
+  .sw-day-header { padding: .4rem 1.5rem; background: var(--bg); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .sw-day-nom { font-size: .78rem; font-weight: 700; color: var(--ink); text-transform: uppercase; letter-spacing: .5px; }
+  .sw-day-date { font-size: .78rem; color: var(--muted); }
+  .sw-badge-auj { font-size: .68rem; background: var(--rose); color: white; border-radius: 10px; padding: 1px 7px; font-weight: 700; }
+  .sw-item { display: flex; align-items: center; gap: 10px; padding: .4rem 1.5rem; border-bottom: 1px solid var(--border); }
+  .sw-item:last-child { border-bottom: none; }
+  .sw-item-heure { font-size: .78rem; color: var(--muted); min-width: 42px; }
+  .sw-item-nom { font-size: .82rem; font-weight: 600; color: var(--ink); flex: 1; }
+  .sw-item-lieu { font-size: .75rem; color: var(--muted); }
+  .sw-item-badge { font-size: .65rem; padding: 2px 7px; border-radius: 10px; white-space: nowrap; font-weight: 700; }
+  .sw-badge-soiree { background: var(--teal-lt); color: var(--teal); }
+  .sw-badge-sociale { background: var(--badge-sociale-bg); color: var(--badge-sociale-txt); }
+  .sw-badge-cours { background: #EDE7F6; color: #4527A0; }
+
   /* ── FOOTER ── */
   footer { text-align: center; padding: 2rem 1rem; font-size: .78rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 2rem; }
 
@@ -142,6 +163,14 @@
 <div class="bandeau">
   Il manque quelque chose? <a href="mailto:info@delmtl.ca">Écrivez-nous!</a>
 </div>
+
+<button class="sw-toggle" onclick="toggleSemaine()">
+  <span style="font-size:1.1rem">📅</span>
+  <span class="sw-toggle-label">Quoi faire cette semaine?</span>
+  <span class="sw-toggle-count" id="sw-count">…</span>
+  <span class="sw-toggle-chevron" id="sw-chevron">▼</span>
+</button>
+<div class="sw-panel" id="sw-panel"></div>
 
 <main>
   <div class="barre-outils">
@@ -421,10 +450,85 @@ async function charger() {
     const cours   = parseCsv(await rC.text()).filter(estActuel).map(e => ({...e, _type:'cours'}));
     toutesEntrees = [...soirees, ...cours];
     afficher();
+    genererSemaine();
   } catch(e) {
     document.getElementById('contenu').innerHTML =
       '<div class="etat">⚠️ Impossible de charger les données. Vérifiez que le Google Sheets est public.</div>';
   }
+}
+
+function toggleSemaine() {
+  const panel = document.getElementById('sw-panel');
+  const chevron = document.getElementById('sw-chevron');
+  const visible = panel.style.display === 'block';
+  panel.style.display = visible ? 'none' : 'block';
+  chevron.classList.toggle('open', !visible);
+}
+
+function genererSemaine() {
+  const aujourd_hui = new Date(); aujourd_hui.setHours(0,0,0,0);
+  const JOURS_FR = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  const MOIS_FR  = ['jan.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+
+  const jours = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(aujourd_hui); d.setDate(d.getDate() + i);
+    jours.push(d);
+  }
+
+  let totalActivites = 0;
+  let html = '';
+
+  jours.forEach((jour, idx) => {
+    const nomJour = JOURS_FR[jour.getDay()];
+    const dateStr = `${jour.getDate()} ${MOIS_FR[jour.getMonth()]}`;
+    const estAujourdhui = idx === 0;
+
+    const activites = toutesEntrees.filter(ev => {
+      const debut = ev['Date début'] ? new Date(ev['Date début']) : null;
+      const fin   = ev['Date fin']   ? new Date(ev['Date fin'])   : null;
+      if (debut) debut.setHours(0,0,0,0);
+      if (fin)   fin.setHours(0,0,0,0);
+      const dansPlage = (!debut || jour >= debut) && (!fin || jour <= fin);
+      if (!dansPlage) return false;
+      if (ev['Récurrent'] === 'Oui') {
+        const joursEv = (ev['Jour(s)'] || '').split(/[,/]/).map(j => j.trim());
+        return joursEv.includes(nomJour);
+      } else {
+        return debut && jour.getTime() === debut.getTime();
+      }
+    });
+
+    activites.sort((a, b) => (a['Heure début'] || '').localeCompare(b['Heure début'] || ''));
+    totalActivites += activites.length;
+
+    html += `<div><div class="sw-day-header">
+      <span class="sw-day-nom">${nomJour}</span>
+      <span class="sw-day-date">${dateStr}</span>
+      ${estAujourdhui ? '<span class="sw-badge-auj">Aujourd\'hui</span>' : ''}
+    </div>`;
+
+    activites.forEach(ev => {
+      const sociale = ev['Type'] === 'En ligne + sociale';
+      const estCours = ev._type === 'cours';
+      const badge = estCours
+        ? '<span class="sw-item-badge sw-badge-cours">Cours</span>'
+        : sociale
+          ? '<span class="sw-item-badge sw-badge-sociale">+ sociale</span>'
+          : '<span class="sw-item-badge sw-badge-soiree">Soirée</span>';
+      html += `<div class="sw-item">
+        <span class="sw-item-heure">${ev['Heure début'] || ''}</span>
+        <span class="sw-item-nom">${ev['Organisateur'] || ev['Lieu / Centre'] || 'Activité'}</span>
+        <span class="sw-item-lieu">${ev['Lieu / Centre'] || ''}</span>
+        ${badge}
+      </div>`;
+    });
+
+    html += '</div>';
+  });
+
+  document.getElementById('sw-panel').innerHTML = html;
+  document.getElementById('sw-count').textContent = totalActivites;
 }
 
 charger();
