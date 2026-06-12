@@ -647,6 +647,42 @@
       "URL source": "https://montreal.ca/evenements/danse-en-ligne-50257",
       "URL association": "",
       "Saison": "Été 2026"
+    },
+    {
+      "Type": "En ligne",
+      "Organisateur": "Yvon Michel Pilote",
+      "Association": "",
+      "Lieu / Centre": "Pavillon d'accueil du Parcours Gouin",
+      "Adresse": "10905, rue Basile-Routhier, Ahuntsic-Cartierville",
+      "Récurrent": "Oui",
+      "Jour(s)": "Vendredi",
+      "Heure début": "17h30",
+      "Heure fin": "19h00",
+      "Date début": "2026-05-08",
+      "Date fin": "2026-07-23",
+      "Prix": "Gratuit",
+      "Précisions": "",
+      "URL source": "https://nature.parcoursgouin.ca/event/danse-en-ligne-2513/register",
+      "URL association": "",
+      "Saison": "Été 2026"
+    },
+    {
+      "Type": "En ligne",
+      "Organisateur": "Yvon Michel Pilote",
+      "Association": "",
+      "Lieu / Centre": "Pavillon d'accueil du Parcours Gouin",
+      "Adresse": "10905, rue Basile-Routhier, Ahuntsic-Cartierville",
+      "Récurrent": "Oui",
+      "Jour(s)": "Vendredi",
+      "Heure début": "17h30",
+      "Heure fin": "19h00",
+      "Date début": "2026-08-07",
+      "Date fin": "2026-09-04",
+      "Prix": "Gratuit",
+      "Précisions": "",
+      "URL source": "https://nature.parcoursgouin.ca/event/danse-en-ligne-2513/register",
+      "URL association": "",
+      "Saison": "Été 2026"
     }
   ],
   "cours": [
