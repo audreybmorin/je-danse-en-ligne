@@ -118,7 +118,7 @@
   .liste-detail a { color: var(--rose); text-decoration: none; font-size: .73rem; border: 1px solid var(--rose-lt); border-radius: 10px; padding: .1rem .45rem; }
   .liste-detail a:hover { background: var(--rose-lt); }
 
-  /* ── ÉTAT ── */
+  .filtre-sep { width: 100%; height: 1px; background: var(--border); margin: 2px 0; }
   .etat { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: .95rem; }
   .etat .ic-big { font-size: 2.5rem; display: block; margin-bottom: .75rem; }
 
@@ -174,16 +174,29 @@
 
 <main>
   <div class="barre-outils">
-    <div class="filtres">
-      <span class="filtre-label">Filtrer&nbsp;:</span>
-      <button class="filtre-btn active" onclick="filtrer('tous', this)">Tout</button>
-      <button class="filtre-btn" onclick="filtrer('soirees', this)">🎶 Soirées et événements</button>
-      <button class="filtre-btn" onclick="filtrer('cours', this)">🎓 Cours et ateliers</button>
-      <button class="filtre-btn" onclick="filtrer('enligne', this)">En ligne seulement</button>
-      <button class="filtre-btn" onclick="filtrer('sociale', this)">En ligne + sociale</button>
-      <button class="filtre-btn" onclick="filtrer('gratuit', this)">Gratuit</button>
+    <div class="filtres" style="flex-direction:column; align-items:flex-start;">
+      <div style="display:flex; flex-wrap:wrap; gap:.4rem; align-items:center;">
+        <span class="filtre-label">Type&nbsp;:</span>
+        <button class="filtre-btn active" onclick="filtrer('tous', this)">Tout</button>
+        <button class="filtre-btn" onclick="filtrer('soirees', this)">🎶 Soirées et événements</button>
+        <button class="filtre-btn" onclick="filtrer('cours', this)">🎓 Cours et ateliers</button>
+        <button class="filtre-btn" onclick="filtrer('enligne', this)">En ligne seulement</button>
+        <button class="filtre-btn" onclick="filtrer('sociale', this)">En ligne + sociale</button>
+        <button class="filtre-btn" onclick="filtrer('gratuit', this)">Gratuit</button>
+      </div>
+      <div class="filtre-sep"></div>
+      <div style="display:flex; flex-wrap:wrap; gap:.4rem; align-items:center;">
+        <span class="filtre-label">Jour&nbsp;:</span>
+        <button class="filtre-btn" onclick="toggleJour('Lundi', this)">Lundi</button>
+        <button class="filtre-btn" onclick="toggleJour('Mardi', this)">Mardi</button>
+        <button class="filtre-btn" onclick="toggleJour('Mercredi', this)">Mercredi</button>
+        <button class="filtre-btn" onclick="toggleJour('Jeudi', this)">Jeudi</button>
+        <button class="filtre-btn" onclick="toggleJour('Vendredi', this)">Vendredi</button>
+        <button class="filtre-btn" onclick="toggleJour('Samedi', this)">Samedi</button>
+        <button class="filtre-btn" onclick="toggleJour('Dimanche', this)">Dimanche</button>
+      </div>
     </div>
-    <div class="vue-bascule">
+    <div class="vue-bascule" style="align-self:flex-start;">
       <button class="vue-btn active" id="btn-fiches" onclick="basculerVue('fiches')">⊞ Fiches</button>
       <button class="vue-btn" id="btn-liste" onclick="basculerVue('liste')">☰ Liste</button>
     </div>
@@ -207,6 +220,7 @@ const SHEETS = {
 
 let toutesEntrees = [];
 let filtreActif = 'tous';
+let joursActifs = new Set();
 let vueActuelle = 'fiches';
 
 const ORDRE_SAISONS = [
@@ -368,6 +382,14 @@ function afficher() {
   if (filtreActif === 'sociale')  entrees = entrees.filter(e => e._type === 'soiree' && e['Type'] === 'En ligne + sociale');
   if (filtreActif === 'gratuit')  entrees = entrees.filter(e => (e['Prix'] || '').toLowerCase() === 'gratuit');
 
+  // Filtre par jour(s)
+  if (joursActifs.size > 0) {
+    entrees = entrees.filter(e => {
+      const jours = (e['Jour(s)'] || '').split(/[,/]/).map(j => j.trim());
+      return jours.some(j => joursActifs.has(j));
+    });
+  }
+
   // Grouper par saison
   const parSaison = {};
   entrees.forEach(ev => {
@@ -424,8 +446,19 @@ function afficher() {
 
 function filtrer(type, btn) {
   filtreActif = type;
-  document.querySelectorAll('.filtre-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.filtre-btn[onclick^="filtrer"]').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  afficher();
+}
+
+function toggleJour(jour, btn) {
+  if (joursActifs.has(jour)) {
+    joursActifs.delete(jour);
+    btn.classList.remove('active');
+  } else {
+    joursActifs.add(jour);
+    btn.classList.add('active');
+  }
   afficher();
 }
 
