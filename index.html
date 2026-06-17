@@ -24,7 +24,78 @@
 <meta name="twitter:title" content="DELmtl — Danse en ligne sociale dans le Grand Montréal">
 <meta name="twitter:description" content="Trouvez tous les cours et soirées de danse en ligne sociale dans le Grand Montréal.">
 <meta name="twitter:image" content="https://delmtl.ca/favicon-192.png">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<!-- Données structurées JSON-LD (GEO / SEO) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "DELmtl",
+  "alternateName": "Danse en ligne sociale Montréal",
+  "url": "https://delmtl.ca",
+  "description": "Répertoire complet des cours et soirées de danse en ligne sociale dans le Grand Montréal. Activités gratuites et payantes, pour débutants et intermédiaires, récurrentes et ponctuelles.",
+  "inLanguage": "fr-CA",
+  "areaServed": {
+    "@type": "City",
+    "name": "Montréal",
+    "containedInPlace": {
+      "@type": "Province",
+      "name": "Québec",
+      "containedInPlace": {
+        "@type": "Country",
+        "name": "Canada"
+      }
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DELmtl",
+    "url": "https://delmtl.ca",
+    "logo": "https://delmtl.ca/favicon-192.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "info@delmtl.ca",
+      "contactType": "customer support",
+      "areaServed": "CA",
+      "availableLanguage": "French"
+    }
+  },
+  "about": {
+    "@type": "Thing",
+    "name": "Danse en ligne sociale",
+    "description": "La danse en ligne sociale (ou danse en ligne) est une forme de danse en groupe où chaque personne danse seule, sans partenaire, en suivant des chorégraphies communes. Elle se distingue de la danse en ligne country par son répertoire musical varié et son caractère social et communautaire."
+  },
+  "keywords": "danse en ligne, danse en ligne sociale, Montréal, cours de danse, soirées de danse, Grand Montréal, danse extérieure, danse gratuite, DELmtl, danse Anjou, danse Rosemont, danse Verdun, danse Longueuil, danse Repentigny, danse Terrebonne"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EventSeries",
+  "name": "Soirées et cours de danse en ligne sociale — Grand Montréal",
+  "description": "Ensemble des activités de danse en ligne sociale dans le Grand Montréal, incluant des soirées extérieures gratuites, des cours pour tous les niveaux et des événements spéciaux.",
+  "url": "https://delmtl.ca",
+  "organizer": {
+    "@type": "Organization",
+    "name": "DELmtl",
+    "url": "https://delmtl.ca"
+  },
+  "location": {
+    "@type": "City",
+    "name": "Grand Montréal",
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "Québec",
+      "addressCountry": "CA"
+    }
+  },
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "inLanguage": "fr-CA",
+  "isAccessibleForFree": true,
+  "typicalAgeRange": "18+"
+}
+</script>
+
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" sizes="192x192" href="favicon-192.png">
 <style>
@@ -484,6 +555,7 @@ async function charger() {
     toutesEntrees = [...soirees, ...cours];
     afficher();
     genererSemaine();
+    genererJsonLd();
   } catch(e) {
     document.getElementById('contenu').innerHTML =
       '<div class="etat">⚠️ Impossible de charger les données. Vérifiez que le Google Sheets est public.</div>';
@@ -565,6 +637,56 @@ function genererSemaine() {
 }
 
 charger();
+
+function genererJsonLd() {
+  const events = toutesEntrees
+    .filter(ev => ev['Date début'] && ev['Récurrent'] !== 'Oui')
+    .map(ev => {
+      const obj = {
+        "@context": "https://schema.org",
+        "@type": ev._type === 'cours' ? "EducationEvent" : "Event",
+        "name": ev['Organisateur'] || ev['Lieu / Centre'] || 'Activité de danse en ligne',
+        "description": [
+          ev._type === 'cours' ? "Cours de danse en ligne sociale" : "Soirée de danse en ligne sociale",
+          ev['Niveau'] ? `Niveau : ${ev['Niveau']}` : '',
+          ev['Précisions'] || ''
+        ].filter(Boolean).join('. '),
+        "startDate": `${ev['Date début']}${ev['Heure début'] ? 'T' + ev['Heure début'].replace('h',':') + ':00' : ''}`,
+        "location": {
+          "@type": "Place",
+          "name": ev['Lieu / Centre'] || '',
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": ev['Adresse'] || '',
+            "addressLocality": "Montréal",
+            "addressRegion": "Québec",
+            "addressCountry": "CA"
+          }
+        },
+        "organizer": {
+          "@type": "Person",
+          "name": ev['Organisateur'] || ev['Lieu / Centre'] || 'DELmtl'
+        },
+        "url": ev['URL source'] || "https://delmtl.ca",
+        "inLanguage": "fr-CA",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "eventStatus": "https://schema.org/EventScheduled"
+      };
+      if (ev['Prix'] && ev['Prix'].toLowerCase() === 'gratuit') {
+        obj.isAccessibleForFree = true;
+        obj.offers = { "@type": "Offer", "price": "0", "priceCurrency": "CAD" };
+      }
+      if (ev['Date fin']) obj.endDate = ev['Date fin'];
+      return obj;
+    });
+
+  if (events.length === 0) return;
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify(events);
+  document.head.appendChild(script);
+}
+
 </script>
 </body>
 </html>
