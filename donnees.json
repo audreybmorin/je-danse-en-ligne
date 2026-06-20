@@ -1088,7 +1088,7 @@
     {
       "Organisateur": "André Trépanier",
       "Association": "Centre Gabrielle-et-Marcel-Lapalme (SLAB)",
-      "Lieu / Centre": "Parc Aimé-Léonard (Parc Lafont)",
+      "Lieu / Centre": "Parc André-Lavallée (anciennement Parc Lafond)",
       "Adresse": "5350, rue Lafond, Montréal (Rosemont)",
       "Jour(s)": "Jeudi",
       "Heure début": "18h30",
@@ -1099,6 +1099,23 @@
       "Niveau": "Tous niveaux",
       "Précisions": "Inscription obligatoire",
       "URL source": "https://slabrosemont.org/project/danse-en-ligne-2/",
+      "URL association": "",
+      "Saison": "Été 2026"
+    },
+    {
+      "Organisateur": "André Trépanier",
+      "Association": "",
+      "Lieu / Centre": "Parc Aimé-Léonard",
+      "Adresse": "4975 boul. Gouin E, Montréal-Nord",
+      "Jour(s)": "Mardi",
+      "Heure début": "18h30",
+      "Heure fin": "20h00",
+      "Date début": "2026-07-07",
+      "Date fin": "2026-08-25",
+      "Prix": "Gratuit",
+      "Niveau": "Débutant",
+      "Précisions": "Mix social country",
+      "URL source": "",
       "URL association": "",
       "Saison": "Été 2026"
     }
