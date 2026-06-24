@@ -168,6 +168,8 @@
   .carte-ligne { display: flex; align-items: flex-start; gap: .5rem; font-size: .82rem; color: var(--muted); }
   .carte-ligne .ic { font-size: .9rem; flex-shrink: 0; margin-top: .05rem; }
   .carte-ligne strong { color: var(--ink); font-weight: 600; }
+  .carte-ligne a, .liste-lieu a { color: var(--rose); text-decoration: none; }
+  .carte-ligne a:hover, .liste-lieu a:hover { text-decoration: underline; }
   .carte-prix { display: inline-block; font-size: .8rem; font-weight: 700; padding: .15rem .6rem; border-radius: 12px; background: var(--teal-lt); color: var(--teal); align-self: flex-start; }
   .carte-prix.payant { background: #FFF8E1; color: #F57F17; }
   .carte-precisions { font-size: .77rem; color: var(--muted); border-top: 1px dashed var(--border); padding-top: .4rem; line-height: 1.5; }
@@ -344,6 +346,13 @@ function fmtHoraire(ev) {
   return ev['Heure fin'] ? `${ev['Heure début']} à ${ev['Heure fin']}` : ev['Heure début'];
 }
 
+function lienLieu(ev) {
+  const lieu = lienLieu(ev);
+  if (!lieu) return '';
+  const requete = encodeURIComponent([ev['Lieu / Centre'], ev['Adresse']].filter(Boolean).join(', '));
+  return `<a href="https://www.google.com/maps/search/?api=1&query=${requete}" target="_blank" rel="noopener">${lieu}</a>`;
+}
+
 function badgeSoiree(ev) {
   const sociale = ev['Type'] === 'En ligne + sociale';
   return `<span class="carte-badge ${sociale?'badge-sociale':'badge-enligne'}">${sociale?'+ sociale':'Soirée'}</span>`;
@@ -359,7 +368,7 @@ function carteSoiree(ev) {
   const prixHtml = prix ? `<span class="carte-prix ${prix.toLowerCase()==='gratuit'?'':'payant'}">${prix}</span>` : '';
   const periode = fmtPeriode(ev['Date début'], ev['Date fin']);
   const horaire = fmtHoraire(ev);
-  const lieu = [ev['Lieu / Centre'], ev['Adresse']].filter(Boolean).join(' — ');
+  const lieu = lienLieu(ev);
   return `<div class="carte">
     <div class="carte-header">
       <div class="carte-titre">${ev['Organisateur'] || ev['Lieu / Centre'] || 'Activité'}</div>
@@ -384,7 +393,7 @@ function carteCours(ev) {
   const prixHtml = prix ? `<span class="carte-prix ${prix.toLowerCase()==='gratuit'?'':'payant'}">${prix}</span>` : '';
   const periode = fmtPeriode(ev['Date début'], ev['Date fin']);
   const horaire = fmtHoraire(ev);
-  const lieu = [ev['Lieu / Centre'], ev['Adresse']].filter(Boolean).join(' — ');
+  const lieu = lienLieu(ev);
   return `<div class="carte">
     <div class="carte-header">
       <div class="carte-titre">${ev['Organisateur'] || ev['Lieu / Centre'] || 'Cours'}</div>
@@ -411,7 +420,7 @@ function listeSoiree(ev) {
   const prixHtml = prix ? `<span class="liste-prix ${prix.toLowerCase()==='gratuit'?'':'payant'}">${prix}</span>` : '';
   const periode = fmtPeriode(ev['Date début'], ev['Date fin']);
   const horaire = fmtHoraire(ev);
-  const lieu = [ev['Lieu / Centre'], ev['Adresse']].filter(Boolean).join(' — ');
+  const lieu = lienLieu(ev);
   return `<div class="liste-item">
     <div class="liste-nom">${ev['Organisateur'] || ev['Lieu / Centre'] || 'Activité'}</div>
     <div class="liste-lieu">${lieu}</div>
@@ -430,7 +439,7 @@ function listeCours(ev) {
   const prixHtml = prix ? `<span class="liste-prix ${prix.toLowerCase()==='gratuit'?'':'payant'}">${prix}</span>` : '';
   const periode = fmtPeriode(ev['Date début'], ev['Date fin']);
   const horaire = fmtHoraire(ev);
-  const lieu = [ev['Lieu / Centre'], ev['Adresse']].filter(Boolean).join(' — ');
+  const lieu = lienLieu(ev);
   return `<div class="liste-item">
     <div class="liste-nom">${ev['Organisateur'] || ev['Lieu / Centre'] || 'Cours'}</div>
     <div class="liste-lieu">${lieu}</div>
