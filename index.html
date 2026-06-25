@@ -347,7 +347,7 @@ function fmtHoraire(ev) {
 }
 
 function lienLieu(ev) {
-  const lieu = lienLieu(ev);
+  const lieu = [ev['Lieu / Centre'], ev['Adresse']].filter(Boolean).join(' — ');
   if (!lieu) return '';
   const requete = encodeURIComponent([ev['Lieu / Centre'], ev['Adresse']].filter(Boolean).join(', '));
   return `<a href="https://www.google.com/maps/search/?api=1&query=${requete}" target="_blank" rel="noopener">${lieu}</a>`;
