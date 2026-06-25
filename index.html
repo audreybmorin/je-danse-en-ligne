@@ -567,7 +567,7 @@ async function charger() {
     genererJsonLd();
   } catch(e) {
     document.getElementById('contenu').innerHTML =
-      '<div class="etat">⚠️ Impossible de charger les données. Vérifiez que le Google Sheets est public.</div>';
+      '<div class="etat">⚠️ Une erreur est survenue. Veuillez réessayer dans quelques instants ou rafraîchir la page.</div>';
   }
 }
 
