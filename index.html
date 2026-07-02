@@ -296,17 +296,7 @@ let filtreActif = 'tous';
 let joursActifs = new Set();
 let vueActuelle = 'fiches';
 
-function parseDate(str) {
-  if (!str) return null;
-  const [y, m, d] = str.split('-').map(Number);
-  return new Date(y, m - 1, d); // interprétation locale, pas UTC
-}
-
 const ORDRE_SAISONS = [
-  'Printemps 2025','Été 2025','Automne 2025','Hiver 2026','Printemps 2026',
-  'Été 2026','Automne 2026','Hiver 2027','Printemps 2027','Été 2027',
-  'Automne 2027','Hiver 2028','Printemps 2028','Été 2028'
-];
   'Printemps 2025','Été 2025','Automne 2025','Hiver 2026','Printemps 2026',
   'Été 2026','Automne 2026','Hiver 2027','Printemps 2027','Été 2027',
   'Automne 2027','Hiver 2028','Printemps 2028','Été 2028'
@@ -554,6 +544,14 @@ function basculerVue(v) {
   afficher();
 }
 
+
+
+function parseDate(str) {
+  if (!str) return null;
+  const [y, m, d] = str.split('-').map(Number);
+  return new Date(y, m - 1, d);
+}
+
 function estActuel(ev) {
   const fin = ev['Date fin'] || ev['Date début'];
   if (!fin) return true;
@@ -605,7 +603,7 @@ function genererSemaine() {
 
     const activites = toutesEntrees.filter(ev => {
       const debut = ev['Date début'] ? parseDate(ev['Date début']) : null;
-      const fin   = ev['Date fin'] ? parseDate(ev['Date fin']) : null;
+      const fin   = ev['Date fin']   ? parseDate(ev['Date fin'])   : null;
       if (debut) debut.setHours(0,0,0,0);
       if (fin)   fin.setHours(0,0,0,0);
       const dansPlage = (!debut || jour >= debut) && (!fin || jour <= fin);
