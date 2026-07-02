@@ -333,12 +333,7 @@ function parseLigne(l) {
   res.push(cur); return res;
 }
 
-function estActuel(ev) {
-  const fin = ev['Date fin'] || ev['Date début'];
-  if (!fin) return true;
-  const aujourd_hui = new Date(); aujourd_hui.setHours(0,0,0,0);
-  return parseDate(fin) >= aujourd_hui;
-}
+
 
 function fmtDate(d) {
   if (!d) return '';
