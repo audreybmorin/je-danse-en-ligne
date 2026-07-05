@@ -1,7 +1,5 @@
 // ═══════════════════════════════════════════════════════════
 //  Je danse en ligne — Apps Script
-//  Reçoit les données de GitHub Actions et remplace
-//  le contenu de chaque onglet entièrement.
 // ═══════════════════════════════════════════════════════════
 
 const ONGLET_SOIREES = "Soirées";
@@ -11,14 +9,14 @@ const EN_TETES_SOIREES = [
   "Type","Organisateur","Association","Lieu / Centre","Adresse",
   "Récurrent","Jour(s)","Heure début","Heure fin",
   "Date début","Date fin","Prix","Précisions",
-  "URL source","URL association","Saison"
+  "URL source","URL association","Saison","Lieu type"
 ];
 
 const EN_TETES_COURS = [
   "Organisateur","Association","Lieu / Centre","Adresse",
   "Jour(s)","Heure début","Heure fin",
   "Date début","Date fin","Prix","Niveau","Précisions",
-  "URL source","URL association","Saison"
+  "URL source","URL association","Saison","Lieu type"
 ];
 
 function doPost(e) {
