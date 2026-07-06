@@ -1314,6 +1314,24 @@
       "URL association": "",
       "Saison": "Été 2026",
       "Lieu type": "Extérieur"
+    },
+    {
+      "Organisateur": "Le Bel Âge d'Anjou (BAA)",
+      "Association": "",
+      "Lieu / Centre": "Centre Roger-Rousseau",
+      "Adresse": "7501, avenue Rondeau, 2e étage, Anjou",
+      "Jour(s)": "Lundi",
+      "Heure début": "19h00",
+      "Heure fin": "21h00",
+      "Date début": "2026-06-01",
+      "Date fin": "2026-08-31",
+      "Prix": "5$/pratique",
+      "Niveau": "Tous niveaux",
+      "Précisions": "Carte de membre BAA obligatoire (renouvellement ou achat à la première présence). Café gratuit.",
+      "URL source": "",
+      "URL association": "",
+      "Saison": "Été 2026",
+      "Lieu type": "Intérieur"
     }
   ]
 }
