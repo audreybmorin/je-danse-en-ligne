@@ -23,7 +23,7 @@ jobs:
             .["Jour(s)"], .["Heure début"], .["Heure fin"],
             .["Date début"], .["Date fin"], .["Prix"],
             .["Précisions"], .["URL source"], .["URL association"],
-            .["Saison"]
+            .["Saison"], .["Lieu type"]
           ]]}' donnees.json)
           curl -s -L -X POST "${{ secrets.APPS_SCRIPT_URL }}" \
             -H "Content-Type: application/json" \
@@ -38,7 +38,7 @@ jobs:
             .["Date début"], .["Date fin"], .["Prix"],
             .["Niveau"], .["Précisions"],
             .["URL source"], .["URL association"],
-            .["Saison"]
+            .["Saison"], .["Lieu type"]
           ]]}' donnees.json)
           curl -s -L -X POST "${{ secrets.APPS_SCRIPT_URL }}" \
             -H "Content-Type: application/json" \
