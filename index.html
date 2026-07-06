@@ -192,6 +192,8 @@
   .liste-detail a:hover { background: var(--rose-lt); }
 
   .filtre-sep { width: 100%; height: 1px; background: var(--border); margin: 2px 0; }
+  .badge-interieur { background: #E3F2FD; color: #1565C0; }
+  .badge-exterieur { background: #E8F5E9; color: #2E7D32; }
   .etat { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: .95rem; }
   .etat .ic-big { font-size: 2.5rem; display: block; margin-bottom: .75rem; }
 
@@ -256,6 +258,8 @@
         <button class="filtre-btn" onclick="filtrer('enligne', this)">En ligne seulement</button>
         <button class="filtre-btn" onclick="filtrer('sociale', this)">En ligne + sociale</button>
         <button class="filtre-btn" onclick="filtrer('gratuit', this)">Gratuit</button>
+        <button class="filtre-btn" onclick="filtrer('exterieur', this)">🌳 Extérieur</button>
+        <button class="filtre-btn" onclick="filtrer('interieur', this)">🏠 Intérieur</button>
       </div>
       <div class="filtre-sep"></div>
       <div style="display:flex; flex-wrap:wrap; gap:.4rem; align-items:center;">
@@ -376,6 +380,7 @@ function carteSoiree(ev) {
     </div>
     ${prixHtml}
     ${ev['Précisions'] ? `<div class="carte-precisions">${ev['Précisions']}</div>` : ''}
+    ${ev['Lieu type'] ? `<span class="carte-badge ${ev['Lieu type']==='Extérieur'?'badge-exterieur':'badge-interieur'}">${ev['Lieu type']==='Extérieur'?'🌳 Extérieur':'🏠 Intérieur'}</span>` : ''}
     ${(ev['URL source']||ev['URL association']) ? `<div class="carte-liens">
       ${ev['URL source'] ? `<a class="carte-lien" href="${ev['URL source']}" target="_blank" rel="noopener">Source</a>` : ''}
       ${ev['URL association'] ? `<a class="carte-lien" href="${ev['URL association']}" target="_blank" rel="noopener">Association</a>` : ''}
@@ -402,6 +407,7 @@ function carteCours(ev) {
     </div>
     ${prixHtml}
     ${ev['Précisions'] ? `<div class="carte-precisions">${ev['Précisions']}</div>` : ''}
+    ${ev['Lieu type'] ? `<span class="carte-badge ${ev['Lieu type']==='Extérieur'?'badge-exterieur':'badge-interieur'}">${ev['Lieu type']==='Extérieur'?'🌳 Extérieur':'🏠 Intérieur'}</span>` : ''}
     ${(ev['URL source']||ev['URL association']) ? `<div class="carte-liens">
       ${ev['URL source'] ? `<a class="carte-lien" href="${ev['URL source']}" target="_blank" rel="noopener">Source</a>` : ''}
       ${ev['URL association'] ? `<a class="carte-lien" href="${ev['URL association']}" target="_blank" rel="noopener">Association</a>` : ''}
@@ -455,7 +461,9 @@ function afficher() {
   if (filtreActif === 'cours')    entrees = entrees.filter(e => e._type === 'cours');
   if (filtreActif === 'enligne')  entrees = entrees.filter(e => e._type === 'soiree' && e['Type'] === 'En ligne');
   if (filtreActif === 'sociale')  entrees = entrees.filter(e => e._type === 'soiree' && e['Type'] === 'En ligne + sociale');
-  if (filtreActif === 'gratuit')  entrees = entrees.filter(e => (e['Prix'] || '').toLowerCase() === 'gratuit');
+  if (filtreActif === 'gratuit')    entrees = entrees.filter(e => (e['Prix'] || '').toLowerCase() === 'gratuit');
+  if (filtreActif === 'exterieur')  entrees = entrees.filter(e => e['Lieu type'] === 'Extérieur');
+  if (filtreActif === 'interieur')  entrees = entrees.filter(e => e['Lieu type'] === 'Intérieur');
 
   // Filtre par jour(s)
   if (joursActifs.size > 0) {
