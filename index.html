@@ -498,16 +498,18 @@ function afficher() {
     const items = parSaison[saison];
 
     // Trier : soirées par jour, cours par date
-    const soirees = items.filter(e => e._type === 'soiree')
+    const soireesRec = items.filter(e => e._type === 'soiree' && e['Récurrent'] === 'Oui')
       .sort((a,b) => {
         const ia = ORDRE_JOURS.indexOf(a['Jour(s)']);
         const ib = ORDRE_JOURS.indexOf(b['Jour(s)']);
         return (ia===-1?99:ia)-(ib===-1?99:ib);
       });
+    const soireesPonc = items.filter(e => e._type === 'soiree' && e['Récurrent'] !== 'Oui')
+      .sort((a,b) => (a['Date début']||'').localeCompare(b['Date début']||''));
     const cours = items.filter(e => e._type === 'cours')
       .sort((a,b) => (a['Date début']||'').localeCompare(b['Date début']||''));
 
-    const ordonnes = [...soirees, ...cours];
+    const ordonnes = [...soireesRec, ...soireesPonc, ...cours];
 
     html += `<div class="saison-section">
       <div class="saison-titre">${saison}</div>
