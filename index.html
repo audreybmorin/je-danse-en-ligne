@@ -509,7 +509,7 @@ function afficher() {
     const cours = items.filter(e => e._type === 'cours')
       .sort((a,b) => (a['Date début']||'').localeCompare(b['Date début']||''));
 
-    const ordonnes = [...soireesRec, ...soireesPonc, ...cours];
+    const ordonnes = [...soireesPonc, ...soireesRec, ...cours];
 
     html += `<div class="saison-section">
       <div class="saison-titre">${saison}</div>
