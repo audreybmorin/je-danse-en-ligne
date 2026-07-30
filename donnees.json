@@ -1253,6 +1253,25 @@
       "URL association": "",
       "Saison": "Printemps 2027",
       "Lieu type": "Intérieur"
+    },
+    {
+      "Type": "En ligne",
+      "Organisateur": "Ronald Lacoste",
+      "Association": "",
+      "Lieu / Centre": "Centre communautaire St-Robert",
+      "Adresse": "701, rue Duhamel, Longueuil",
+      "Récurrent": "Non",
+      "Jour(s)": "Samedi",
+      "Heure début": "18h00",
+      "Heure fin": "22h00",
+      "Date début": "2026-08-22",
+      "Date fin": "2026-08-22",
+      "Prix": "28$",
+      "Précisions": "Hommage à M. Aurèle Santoire. Souper poulet BBQ à 18h, danse jusqu'à 22h. Billets en vente à l'avance.",
+      "URL source": "",
+      "URL association": "",
+      "Saison": "Été 2026",
+      "Lieu type": "Intérieur"
     }
   ],
   "cours": [
