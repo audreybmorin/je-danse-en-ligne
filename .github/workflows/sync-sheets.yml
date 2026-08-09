@@ -43,3 +43,16 @@ jobs:
           curl -s -L -X POST "${{ secrets.APPS_SCRIPT_URL }}" \
             -H "Content-Type: application/json" \
             -d "$COURS"
+
+      - name: Générer la page statique evenements.html
+        run: python3 generer_statique.py
+
+      - name: Publier evenements.html sur GitHub
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add evenements.html
+          git diff --staged --quiet || git commit -m "Mise à jour automatique evenements.html"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
