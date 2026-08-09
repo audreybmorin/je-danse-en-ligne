@@ -6,6 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://delmtl.ca/evenements.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://delmtl.ca/a-propos.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
