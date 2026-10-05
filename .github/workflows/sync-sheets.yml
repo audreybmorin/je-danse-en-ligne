@@ -2,6 +2,8 @@ name: Sync vers Google Sheets
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'donnees.json'
   workflow_dispatch:
