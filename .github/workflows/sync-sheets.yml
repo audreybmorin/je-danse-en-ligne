@@ -27,9 +27,16 @@ jobs:
             .["Précisions"], .["URL source"], .["URL association"],
             .["Saison"], .["Lieu type"]
           ]]}' donnees.json)
-          curl -s -L -X POST "${{ secrets.APPS_SCRIPT_URL }}" \
+          # Sans -X POST : curl suit la redirection d'Apps Script en GET pour lire la réponse
+          REPONSE=$(curl -sS -L "${{ secrets.APPS_SCRIPT_URL }}" \
             -H "Content-Type: application/json" \
-            -d "$SOIREES"
+            --data "$SOIREES")
+          echo "$REPONSE"
+          ATTENDU=$(jq '.soirees | length' donnees.json)
+          if ! echo "$REPONSE" | jq -e --argjson n "$ATTENDU" '.succes == true and .lignes == $n' > /dev/null; then
+            echo "::error::Échec de l'envoi des soirées vers Google Sheets"
+            exit 1
+          fi
 
       - name: Envoyer les cours
         run: |
@@ -42,9 +49,16 @@ jobs:
             .["URL source"], .["URL association"],
             .["Saison"], .["Lieu type"]
           ]]}' donnees.json)
-          curl -s -L -X POST "${{ secrets.APPS_SCRIPT_URL }}" \
+          # Sans -X POST : curl suit la redirection d'Apps Script en GET pour lire la réponse
+          REPONSE=$(curl -sS -L "${{ secrets.APPS_SCRIPT_URL }}" \
             -H "Content-Type: application/json" \
-            -d "$COURS"
+            --data "$COURS")
+          echo "$REPONSE"
+          ATTENDU=$(jq '.cours | length' donnees.json)
+          if ! echo "$REPONSE" | jq -e --argjson n "$ATTENDU" '.succes == true and .lignes == $n' > /dev/null; then
+            echo "::error::Échec de l'envoi des cours vers Google Sheets"
+            exit 1
+          fi
 
       - name: Générer la page statique evenements.html
         run: python3 generer_statique.py
