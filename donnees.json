@@ -1842,6 +1842,25 @@
       "URL association": "",
       "Saison": "Printemps 2027",
       "Lieu type": "Intérieur"
+    },
+    {
+      "Type": "Ponctuelle",
+      "Organisateur": "DJ Claude",
+      "Association": "",
+      "Lieu / Centre": "Salle de danse Hélios",
+      "Adresse": "6396 rue St-Hubert, Montréal",
+      "Récurrent": "Non",
+      "Jour(s)": "Jeudi",
+      "Heure début": "17h30",
+      "Heure fin": "",
+      "Date début": "2026-12-31",
+      "Date fin": "2026-12-31",
+      "Prix": "70$ souper et soirée / 25$ soirée seulement",
+      "Précisions": "Souper du réveillon du jour de l'An, servi à 18h30. Poitrine de poulet farcie de canard et canneberges, gâteau poires caramel. Un verre de mousseux à minuit. Billets en vente à la salle.",
+      "URL source": "",
+      "URL association": "",
+      "Saison": "Hiver 2027",
+      "Lieu type": "Intérieur"
     }
   ],
   "cours": [
