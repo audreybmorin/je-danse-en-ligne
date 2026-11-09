@@ -280,15 +280,12 @@
   </div>
 
   <div id="contenu">
-    <!-- Contenu statique pour les moteurs de recherche -->
-    <noscript>
-      <div style="max-width:720px;margin:2rem auto;padding:1rem;font-family:sans-serif;">
-        <h2>Répertoire de danse en ligne sociale — Grand Montréal</h2>
-        <p>DELmtl.ca répertorie les cours, ateliers, soirées et événements de danse en ligne sociale dans le Grand Montréal. Activités gratuites et payantes, en intérieur et en plein air, pour tous les niveaux.</p>
-        <p>Pour consulter le répertoire complet, veuillez activer JavaScript dans votre navigateur.</p>
-      </div>
-    </noscript>
-    <div class="etat"><span class="ic-big">⏳</span>Chargement…</div>
+    <!-- Contenu statique (moteurs de recherche et chargement) : remplacé par le répertoire une fois les données chargées -->
+    <div class="etat">
+      <h2 style="font-size:1.15rem;color:var(--ink);margin-bottom:.5rem;">Répertoire de danse en ligne sociale — Grand Montréal</h2>
+      <p style="max-width:560px;margin:0 auto .75rem;">DELmtl.ca répertorie les cours, ateliers, soirées et événements de danse en ligne sociale dans le Grand Montréal : Montréal, Laval, Longueuil, Repentigny, Terrebonne. Activités gratuites et payantes, en intérieur et en plein air, pour tous les niveaux.</p>
+      <p><span class="ic-big">⏳</span>Chargement du répertoire… <a href="/evenements.html" style="color:var(--rose);">Consulter la liste complète des activités</a></p>
+    </div>
   </div>
 </main>
 
@@ -297,11 +294,7 @@
 </footer>
 
 <script>
-const SHEETS_ID = '1-yMq_Z6HPy60pED7UsAZ2Vt4IEnZXGx-KnN4O-jX_Sc';
-const SHEETS = {
-  soirees: `https://docs.google.com/spreadsheets/d/${SHEETS_ID}/gviz/tq?tqx=out:csv&sheet=Soir%C3%A9es`,
-  cours:   `https://docs.google.com/spreadsheets/d/${SHEETS_ID}/gviz/tq?tqx=out:csv&sheet=Cours`
-};
+const DONNEES_URL = '/donnees.json';
 
 let toutesEntrees = [];
 let filtreActif = 'tous';
@@ -313,29 +306,6 @@ const ORDRE_SAISONS = [
   'Été 2026','Automne 2026','Hiver 2027','Printemps 2027','Été 2027',
   'Automne 2027','Hiver 2028','Printemps 2028','Été 2028'
 ];
-
-function parseCsv(texte) {
-  const lignes = texte.trim().split(/\r?\n/);
-  const entetes = parseLigne(lignes[0]);
-  return lignes.slice(1).map(l => {
-    const vals = parseLigne(l);
-    const obj = {};
-    entetes.forEach((h, i) => obj[h] = (vals[i] || '').trim());
-    return obj;
-  });
-}
-function parseLigne(l) {
-  const res = []; let cur = ''; let inQ = false;
-  for (let i = 0; i < l.length; i++) {
-    const c = l[i];
-    if (c === '"') { if (inQ && l[i+1]==='"') { cur+='"'; i++; } else inQ=!inQ; }
-    else if (c === ',' && !inQ) { res.push(cur); cur=''; }
-    else cur += c;
-  }
-  res.push(cur); return res;
-}
-
-
 
 function fmtDate(d) {
   if (!d) return '';
@@ -579,9 +549,12 @@ function estActuel(ev) {
 
 async function charger() {
   try {
-    const [rS, rC] = await Promise.all([fetch(SHEETS.soirees), fetch(SHEETS.cours)]);
-    const soirees = parseCsv(await rS.text()).filter(estActuel).map(e => ({...e, _type:'soiree'}));
-    const cours   = parseCsv(await rC.text()).filter(estActuel).map(e => ({...e, _type:'cours'}));
+    const r = await fetch(DONNEES_URL, { cache: 'no-cache' });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const donnees = await r.json();
+    const nettoyer = e => Object.fromEntries(Object.entries(e).map(([k, v]) => [k, String(v ?? '').trim()]));
+    const soirees = (donnees.soirees || []).map(nettoyer).filter(estActuel).map(e => ({...e, _type:'soiree'}));
+    const cours   = (donnees.cours   || []).map(nettoyer).filter(estActuel).map(e => ({...e, _type:'cours'}));
     toutesEntrees = [...soirees, ...cours];
     afficher();
     genererSemaine();

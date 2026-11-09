@@ -8,6 +8,7 @@ Toutes les données sont dans `donnees.json`.
 - Un push sur `main` qui modifie `donnees.json` déclenche `.github/workflows/sync-sheets.yml` :
   1. les onglets « Soirées » et « Cours » du Google Sheet « Je danse en ligne » sont **entièrement remplacés** par le contenu de `donnees.json` ;
   2. `generer_statique.py` régénère `evenements.html`, puis le bot le pousse sur `main`.
+- La page d'accueil (`index.html`) lit directement `donnees.json` ; le Google Sheet n'est qu'une copie.
 - Le workflow ne tourne que sur `main` : une branche de travail ne peut pas écraser le Google Sheet.
 - Après un push sur `main`, faire `git pull origin main` avant le push suivant (le bot ajoute un commit `evenements.html`).
 
